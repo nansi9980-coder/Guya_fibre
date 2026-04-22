@@ -1,0 +1,93 @@
+{
+  "name": "GUYA FIBRE — Experts Fibre Optique en Guyane",
+  "short_name": "GUYA FIBRE",
+  "description": "Déploiement et maintenance de réseaux fibre optique en Guyane française",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#0ea5e9",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/logo.jpg",
+      "sizes": "any",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/hero-bg.jpg",
+      "sizes": "1200x630",
+      "form_factor": "wide",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/images/hero-bg.jpg",
+      "sizes": "540x720",
+      "form_factor": "narrow",
+      "type": "image/jpeg"
+    }
+  ],
+  "categories": ["business", "utilities"],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Demander une prise de contact",
+      "short_name": "Contact",
+      "description": "Envoyer une demande de prise de contact",
+      "url": "/contact",
+      "icons": [
+        {
+          "src": "/icon",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Nos services",
+      "short_name": "Services",
+      "description": "Découvrir nos services de fibre optique",
+      "url": "/services",
+      "icons": [
+        {
+          "src": "/icon",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "À propos",
+      "short_name": "À propos",
+      "description": "En savoir plus sur GUYA FIBRE",
+      "url": "/apropos",
+      "icons": [
+        {
+          "src": "/icon",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
