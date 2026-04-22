@@ -1,7 +1,7 @@
 import api from './axios';
 
 export interface SettingsGroup {
-  [key: string]: string | boolean | number;
+  [key: string]: string | boolean | number | undefined;
 }
 
 export const settingsApi = {
