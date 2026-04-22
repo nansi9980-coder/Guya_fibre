@@ -1,4 +1,6 @@
 import { ImageResponse } from 'next/og'
+import { readFile } from 'fs/promises'
+import path from 'path'
 
 export const runtime = 'nodejs'
 export const contentType = 'image/png'
@@ -9,11 +11,9 @@ export const size = {
 
 export default async function Icon() {
   try {
-    const logoResponse = await fetch(new URL('./public/images/site-icon.png', import.meta.url))
-    if (!logoResponse.ok) throw new Error('Logo fetch failed')
-    
-    const logoBuffer = await logoResponse.arrayBuffer()
-    const logoBase64 = Buffer.from(logoBuffer).toString('base64')
+    const iconPath = path.join(process.cwd(), 'public', 'images', 'site-icon.png')
+    const logoBuffer = await readFile(iconPath)
+    const logoBase64 = logoBuffer.toString('base64')
 
     return new ImageResponse(
       (
