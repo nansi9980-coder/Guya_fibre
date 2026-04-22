@@ -9,11 +9,11 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ThemePaletteCustomizer } from '@/components/theme-palette-customizer'
-import { settingsApi } from '@/lib/api/settings.api'
+import { settingsApi, SettingsGroup } from '@/lib/api/settings.api'
 import { useThemeCustom } from '@/lib/theme-custom'
 import { toast } from 'sonner'
 import {
-  Building2, Mail, Phone, MapPin, Globe, Save, Bell, Palette, Server, Loader2,
+  Building2, Mail, Phone, MapPin, Globe, Save, Bell, Palette, Loader2,
 } from 'lucide-react'
 
 export default function AdminSettingsPage() {
@@ -37,9 +37,9 @@ export default function AdminSettingsPage() {
 
   useEffect(() => {
     Promise.all([
-      settingsApi.getGroup('company').catch(() => ({})),
-      settingsApi.getGroup('seo').catch(() => ({})),
-      settingsApi.getGroup('notifications').catch(() => ({})),
+      settingsApi.getGroup('company').catch((): SettingsGroup => ({})),
+      settingsApi.getGroup('seo').catch((): SettingsGroup => ({})),
+      settingsApi.getGroup('notifications').catch((): SettingsGroup => ({})),
     ]).then(([company, seo, notif]) => {
       setCompanySettings({
         name: String(company.name || ''),
