@@ -28,7 +28,7 @@ export function ContactSection() {
   const [company, setCompany] = useState<CompanySettings>(DEFAULTS)
 
   useEffect(() => {
-    fetch(`${API_URL}/api/settings/company`)
+    fetch(`${API_URL}/api/settings/company/public`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         if (data) {

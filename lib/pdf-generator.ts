@@ -50,7 +50,7 @@ const API_URL = typeof window !== 'undefined'
 /** Charge les infos société depuis le backend, avec fallback */
 async function fetchCompanyInfo(): Promise<CompanyInfo> {
   try {
-    const r = await fetch(`${API_URL}/api/settings/company`)
+    const r = await fetch(`${API_URL}/api/settings/company/public`)
     if (!r.ok) return FALLBACK_COMPANY
     const data = await r.json()
     return {

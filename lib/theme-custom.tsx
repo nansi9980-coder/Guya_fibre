@@ -188,7 +188,7 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
 
 async function fetchActivePalette(): Promise<string> {
   try {
-    const res = await fetch(`${BACKEND_URL}/settings/theme/public`, { cache: 'no-store' })
+    const res = await fetch(`${BACKEND_URL}/api/settings/theme/public`, { cache: 'no-store' })
     if (!res.ok) return 'default'
     const data = await res.json()
     return data.activePalette || 'default'

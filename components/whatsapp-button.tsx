@@ -12,7 +12,7 @@ export function WhatsAppButton() {
   const [whatsappNumber, setWhatsappNumber] = useState(DEFAULT_WHATSAPP)
 
   useEffect(() => {
-    fetch(`${API_URL}/api/settings/site`)
+    fetch(`${API_URL}/api/settings/site/public`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         if (data?.whatsappNumber) {
