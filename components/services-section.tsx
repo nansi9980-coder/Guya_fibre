@@ -85,9 +85,18 @@ export function ServicesSection() {
             const Icon = ICON_MAP[service.icon] || Server
             const title = (locale === 'en' && service.titleEn) ? service.titleEn : service.titleFr
             const desc = (locale === 'en' && service.descEn) ? service.descEn : service.descFr
+            const SLUG_IMAGE_MAP: Record<string, string> = {
+              'ftth': '/images/service-deploiement.jpg',
+              'etudes-techniques': '/images/service-etudes.jpg',
+              'raccordement': '/images/service-raccordement.jpg',
+              'maintenance': '/images/service-maintenance.jpg',
+              'entreprises': '/images/service-entreprises.jpg',
+              'deploiement': '/images/service-deploiement.jpg',
+              'etudes': '/images/service-etudes.jpg',
+            }
             const imgSrc = service.image?.startsWith('http')
               ? service.image
-              : service.image || `/images/service-${service.slug}.jpg`
+              : service.image || SLUG_IMAGE_MAP[service.slug] || `/images/service-deploiement.jpg`
 
             return (
               <article
