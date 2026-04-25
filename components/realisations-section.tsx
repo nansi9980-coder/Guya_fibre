@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { MapPin, ArrowRight } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
+import { resolveMediaUrl } from "@/lib/utils/media"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
 
@@ -87,7 +88,7 @@ export function RealisationsSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project) => {
             const title = (locale === 'en' && project.titleEn) ? project.titleEn : project.titleFr
-            const imgSrc = project.images?.[0] || "/images/project-cayenne.jpg"
+            const imgSrc = resolveMediaUrl(project.images?.[0], "/images/project-cayenne.jpg")
             return (
               <article
                 key={project.id}
@@ -96,7 +97,7 @@ export function RealisationsSection() {
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
                   <Image
-                    src={imgSrc.startsWith('http') ? imgSrc : imgSrc}
+                    src={imgSrc}
                     alt={title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
