@@ -1,8 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Quote, Star } from "lucide-react"
+import { useEffect, useState, useCallback } from "react"
+import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
+import useEmblaCarousel from "embla-carousel-react"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
 
@@ -45,18 +46,39 @@ const FALLBACK_TESTIMONIALS: Testimonial[] = [
 export function TestimonialsSection() {
   const { locale } = useLanguage()
   const [testimonials, setTestimonials] = useState<Testimonial[]>(FALLBACK_TESTIMONIALS)
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" })
 
   useEffect(() => {
     fetch(`${API_URL}/api/site-content/testimonials`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         const list = Array.isArray(data?.content) ? data.content : null
-        if (list && list.length > 0) {
-          setTestimonials(list)
-        }
+        if (list && list.length > 0) setTestimonials(list)
       })
       .catch(() => {})
   }, [])
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    emblaApi.on("select", onSelect)
+    emblaApi.on("reInit", onSelect)
+    return () => {
+      emblaApi.off("select", onSelect)
+      emblaApi.off("reInit", onSelect)
+    }
+  }, [emblaApi, onSelect])
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
+  const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi])
 
   const labels = {
     fr: { badge: "Avis clients", title: "Ce que disent nos clients", subtitle: "Des particuliers, entreprises et collectivités de toute la Guyane nous font confiance." },
@@ -81,9 +103,13 @@ export function TestimonialsSection() {
     locale === "zh" ? "星（满分5）" :
     "étoiles sur 5"
 
+  // Contrôles visibles seulement si plus de 3 avis
+  const showControls = testimonials.length > 3
+
   return (
     <section className="section-padding bg-background">
       <div className="container-wide">
+
         {/* Header */}
         <div className="text-center max-w-xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 rounded-full text-sm text-primary font-medium mb-5 border border-primary/20">
@@ -97,38 +123,83 @@ export function TestimonialsSection() {
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t, idx) => (
-            <figure
-              key={`${t.name}-${idx}`}
-              className="bg-card rounded-2xl border border-border p-7 flex flex-col gap-5 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-primary/5 transition-all duration-200"
-            >
-              <Quote className="w-8 h-8 text-primary/40" aria-hidden="true" />
+        {/* Carousel */}
+        <div className="relative">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex gap-6">
+              {testimonials.map((t, idx) => (
+                <figure
+                  key={`${t.name}-${idx}`}
+                  className="flex-none w-full md:w-[calc(33.333%-1rem)] bg-card rounded-2xl border border-border p-7 flex flex-col gap-5 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-primary/5 transition-all duration-200"
+                >
+                  <Quote className="w-8 h-8 text-primary/40" aria-hidden="true" />
 
-              <blockquote className="text-sm text-foreground/80 leading-relaxed flex-1 text-pretty">
-                &ldquo;{t.quote}&rdquo;
-              </blockquote>
+                  <blockquote className="text-sm text-foreground/80 leading-relaxed flex-1 text-pretty">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
 
-              <figcaption className="flex items-center gap-4 pt-4 border-t border-border">
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold font-display text-sm shrink-0">
-                  {t.initials}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-sm text-foreground">{t.name}</div>
-                  <div className="text-xs text-muted-foreground">
-                    {t.role}{t.company ? ` — ${t.company}` : ""}
-                  </div>
-                </div>
-                <div className="flex gap-0.5" role="img" aria-label={`${t.rating} ${starsLabel}`}>
-                  {Array.from({ length: Math.min(5, Math.max(1, t.rating)) }).map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-accent text-accent" />
-                  ))}
-                </div>
-              </figcaption>
-            </figure>
-          ))}
+                  <figcaption className="flex items-center gap-4 pt-4 border-t border-border">
+                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold font-display text-sm shrink-0">
+                      {t.initials}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-sm text-foreground">{t.name}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {t.role}{t.company ? ` — ${t.company}` : ""}
+                      </div>
+                    </div>
+                    <div className="flex gap-0.5" role="img" aria-label={`${t.rating} ${starsLabel}`}>
+                      {Array.from({ length: Math.min(5, Math.max(1, t.rating)) }).map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-accent text-accent" />
+                      ))}
+                    </div>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+
+          {/* Boutons prev / next — seulement si > 3 avis */}
+          {showControls && (
+            <>
+              <button
+                onClick={scrollPrev}
+                aria-label="Avis précédent"
+                className="absolute -left-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-border shadow-md flex items-center justify-center text-foreground hover:bg-muted hover:border-primary/30 transition-all z-10"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={scrollNext}
+                aria-label="Avis suivant"
+                className="absolute -right-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-border shadow-md flex items-center justify-center text-foreground hover:bg-muted hover:border-primary/30 transition-all z-10"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </>
+          )}
         </div>
+
+        {/* Dots — seulement si > 3 avis */}
+        {showControls && (
+          <div className="flex justify-center gap-2 mt-8" role="tablist" aria-label="Navigation des avis">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                role="tab"
+                aria-selected={i === selectedIndex}
+                aria-label={`Avis ${i + 1}`}
+                onClick={() => scrollTo(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === selectedIndex
+                    ? "w-6 bg-primary"
+                    : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+
       </div>
     </section>
   )
