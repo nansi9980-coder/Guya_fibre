@@ -54,7 +54,7 @@ export function TestimonialsSection() {
     fetch(`${API_URL}/api/site-content/testimonials`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
-        const list = Array.isArray(data?.content) ? data.content : null
+        const list = Array.isArray(data) ? data : Array.isArray(data?.content) ? data.content : null
         if (list && list.length > 0) setTestimonials(list)
       })
       .catch(() => {})
