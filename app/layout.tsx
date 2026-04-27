@@ -45,9 +45,9 @@ export const metadata: Metadata = {
   publisher: 'GUYA FIBRE',
   manifest: '/manifest.json',
   icons: {
-    icon: [{ url: '/site-icon.png', sizes: 'any' }],
-    apple: [{ url: '/apple-icon.png', sizes: '180x180' }],
-    shortcut: ['/site-icon.png'],
+    icon: [{ url: '/images/site-icon.png', sizes: 'any' }],
+    apple: [{ url: '/images/site-icon.png', sizes: '180x180' }],
+    shortcut: ['/images/site-icon.png'],
   },
   appleWebApp: {
     capable: true,
@@ -125,9 +125,9 @@ export default function RootLayout({
     <html lang="fr" className={`${spaceGrotesk.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/icon" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-icon" />
-        <link rel="shortcut icon" href="/icon" />
+        <link rel="icon" href="/images/site-icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/images/site-icon.png" />
+        <link rel="shortcut icon" href="/images/site-icon.png" type="image/png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -136,7 +136,7 @@ export default function RootLayout({
               '@type': 'LocalBusiness',
               name: 'GUYA FIBRE',
               description:
-                'Entreprise guyanaise experte en ingénierie et déploiement fibre optique, GUYA FIBRE accompagne durablement les particuliers, entreprises et collectivités, de Cayenne aux zones isolées de l’intérieur.',
+                'Entreprise guyanaise experte en ingénierie et déploiement fibre optique, GUYA FIBRE accompagne durablement les particuliers, entreprises et collectivités, de Cayenne aux zones isolées de l\u2019intérieur.',
               url: siteUrl,
               telephone: '+594 694435484',
               email: 'contact@guyafibre.com',
