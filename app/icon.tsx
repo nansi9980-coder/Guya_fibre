@@ -11,7 +11,7 @@ export const size = {
 
 export default async function Icon() {
   try {
-    const iconPath = path.join(process.cwd(), 'public', 'images', 'site-icon.png')
+    const iconPath = path.join(process.cwd(), 'public', 'site-icon.png')
     const logoBuffer = await readFile(iconPath)
     const logoBase64 = logoBuffer.toString('base64')
 
@@ -25,14 +25,12 @@ export default async function Icon() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            position: 'relative',
-            overflow: 'hidden',
+            padding: '16px',
           }}
         >
           <img
             src={`data:image/png;base64,${logoBase64}`}
             style={{
-              position: 'relative',
               width: '100%',
               height: '100%',
               objectFit: 'contain',
@@ -46,34 +44,25 @@ export default async function Icon() {
       }
     )
   } catch (error) {
+    // Fallback texte si le fichier est introuvable
     return new ImageResponse(
       (
         <div
           style={{
             width: '100%',
             height: '100%',
-            background: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #0891b2 100%)',
+            background: '#000000',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            position: 'relative',
             fontFamily: 'system-ui, -apple-system, sans-serif',
           }}
         >
           <div
             style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.08) 10px, rgba(255,255,255,0.08) 20px)',
-            }}
-          />
-          <div
-            style={{
-              position: 'relative',
-              fontSize: '48px',
+              fontSize: '64px',
               fontWeight: 'bold',
               color: 'white',
-              textShadow: '0 4px 12px rgba(0,0,0,0.4)',
             }}
           >
             GF

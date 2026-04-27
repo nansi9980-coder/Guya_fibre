@@ -60,9 +60,22 @@ export function Navbar() {
     >
       <div className="mx-auto flex items-center justify-between h-16 md:h-20 px-4 md:px-6 lg:px-10 max-w-[1600px]">
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          <div className="relative w-32 h-10 md:w-40 md:h-12 [filter:none] dark:[filter:invert(1)_brightness(1.1)]">
+          {/*
+            Le logo (site-icon.png) est blanc sur fond transparent.
+            - Mode clair  → on applique invert(1) pour le rendre noir
+            - Mode sombre → aucun filtre, il reste blanc
+            - Sur fond transparent hero (isHomeTop) → il reste blanc (pas de filtre)
+          */}
+          <div
+            className={cn(
+              'relative w-32 h-10 md:w-40 md:h-12',
+              isHomeTop
+                ? '[filter:none]'                           // hero transparent → blanc
+                : '[filter:none] dark:[filter:invert(1)]'   // clair → blanc, sombre → noir
+            )}
+          >
             <Image
-              src="/images/logo.jpg"
+              src="/site-icon.png"
               alt="GUYA FIBRE"
               fill
               className="object-contain"
