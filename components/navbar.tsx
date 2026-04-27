@@ -59,9 +59,8 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto flex items-center justify-between h-16 md:h-20 px-4 md:px-6 lg:px-10 max-w-[1600px]">
-        {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          <div className="relative w-32 h-10 md:w-40 md:h-12 [filter:invert(1)_brightness(1.1)] dark:[filter:none]">
+          <div className="relative w-32 h-10 md:w-40 md:h-12 [filter:none] dark:[filter:invert(1)_brightness(1.1)]">
             <Image
               src="/images/logo.jpg"
               alt="GUYA FIBRE"
