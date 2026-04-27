@@ -45,9 +45,9 @@ export const metadata: Metadata = {
   publisher: 'GUYA FIBRE',
   manifest: '/manifest.json',
   icons: {
-    icon: [{ url: '/icon', sizes: 'any' }],
-    apple: [{ url: '/apple-icon', sizes: '180x180' }],
-    shortcut: ['/icon'],
+    icon: [{ url: '/site-icon.png', sizes: 'any' }],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180' }],
+    shortcut: ['/site-icon.png'],
   },
   appleWebApp: {
     capable: true,
