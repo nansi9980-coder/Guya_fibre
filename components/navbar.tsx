@@ -69,7 +69,7 @@ export function Navbar() {
           <div
             className={cn(
               'relative w-32 h-10 md:w-40 md:h-12',
-              !isHomeTop && 'logo-adaptive'  // Appliquer le filtre adaptatif au theme quand scrollé
+              isHomeTop ? '[filter:none]' : '[filter:none] dark:[filter:invert(1)]'
             )}
           >
             <Image
