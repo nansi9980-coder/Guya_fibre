@@ -245,9 +245,10 @@
 
 /* Logo theme-aware filters */
 .logo-adaptive {
-  filter: none;  /* Mode clair: blanc */
+  filter: none !important;
 }
 
 .dark .logo-adaptive {
-  filter: invert(1);  /* Mode sombre: noir */
+  filter: invert(1) !important;
+}
 }
