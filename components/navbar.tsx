@@ -62,8 +62,8 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-3 shrink-0">
           {/*
             Le logo (site-icon.png) est blanc sur fond transparent.
-            - Mode clair scrolled → filter: invert(1) pour le rendre noir
-            - Mode sombre scrolled → filter: none, reste blanc
+            - Mode clair scrolled → filter: none, logo blanc
+            - Mode sombre scrolled → filter: invert(1), logo noir
             - Sur fond transparent hero (isHomeTop) → filter: none, reste blanc
           */}
           <div
