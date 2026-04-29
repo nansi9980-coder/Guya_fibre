@@ -62,16 +62,14 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-3 shrink-0">
           {/*
             Le logo (site-icon.png) est blanc sur fond transparent.
-            - Mode clair  → on applique invert(1) pour le rendre noir
-            - Mode sombre → aucun filtre, il reste blanc
-            - Sur fond transparent hero (isHomeTop) → il reste blanc (pas de filtre)
+            - Mode clair scrolled → filter: invert(1) pour le rendre noir
+            - Mode sombre scrolled → filter: none, reste blanc
+            - Sur fond transparent hero (isHomeTop) → filter: none, reste blanc
           */}
           <div
             className={cn(
               'relative w-32 h-10 md:w-40 md:h-12',
-              isHomeTop
-                ? '[filter:none]'                           // hero transparent → blanc
-                : '[filter:none] dark:[filter:invert(1)]'   // clair → blanc, sombre → noir
+              !isHomeTop && 'logo-adaptive'  // Appliquer le filtre adaptatif au theme quand scrollé
             )}
           >
             <Image

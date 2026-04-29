@@ -242,3 +242,12 @@
 .bg-gradient-conic {
   background: conic-gradient(from 0deg, var(--tw-gradient-stops));
 }
+
+/* Logo theme-aware filters */
+.logo-adaptive {
+  filter: none;  /* Mode clair: blanc */
+}
+
+.dark .logo-adaptive {
+  filter: invert(1);  /* Mode sombre: noir */
+}
