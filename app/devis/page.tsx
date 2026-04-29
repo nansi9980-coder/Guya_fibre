@@ -87,6 +87,7 @@ export default function DevisPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submittedRef, setSubmittedRef] = useState<string>('')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const steps = [
     { id: 1, title: t("forms.personalInfo"), icon: User },
@@ -157,7 +158,8 @@ export default function DevisPage() {
         urgency: (formData.urgency === 'tres-urgent' ? 'HIGH' : formData.urgency.toUpperCase()) as 'LOW' | 'NORMAL' | 'HIGH' | 'URGENT',
       }
       
-      await devisApi.create(submitData)
+      const result = await devisApi.create(submitData)
+      setSubmittedRef(result?.reference || '')
       setIsSubmitted(true)
     } catch (error: any) {
       const message = error.response?.data?.message || "Une erreur est survenue lors de l'envoi de votre demande. Veuillez réessayer."
@@ -189,7 +191,7 @@ export default function DevisPage() {
                 {/* Reference number */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-8">
                   <span className="text-sm text-slate-600 dark:text-slate-400">Référence:</span>
-                  <span className="font-mono font-bold text-primary">GF-2026-{Math.random().toString(36).substring(2, 8).toUpperCase()}</span>
+                  <span className="font-mono font-bold text-primary">{submittedRef || 'GF-2026-XXXXXX'}</span>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">

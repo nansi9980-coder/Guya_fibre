@@ -62,14 +62,14 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-3 shrink-0">
           {/*
             Le logo (site-icon.png) est blanc sur fond transparent.
-            - Mode clair scrolled → filter: none, logo blanc
-            - Mode sombre scrolled → filter: invert(1), logo noir
-            - Sur fond transparent hero (isHomeTop) → filter: none, reste blanc
+            - isHomeTop (hero transparent) → filter:none → logo blanc
+            - scrolled light mode → invert(1) → logo NOIR sur fond blanc
+            - scrolled dark mode → filter:none → logo blanc sur fond sombre
           */}
           <div
             className={cn(
               'relative w-32 h-10 md:w-40 md:h-12',
-              isHomeTop ? '[filter:none]' : '[filter:none] dark:[filter:invert(1)]'
+              isHomeTop ? '[filter:none]' : '[filter:invert(1)] dark:[filter:none]'
             )}
           >
             <Image
