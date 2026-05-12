@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useRef, useState } from "react"
 import { useLanguage } from "@/lib/i18n/context"
 import Link from "next/link"
