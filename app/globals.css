@@ -4,74 +4,64 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* GUYA FIBRE Brand Colors - Light Mode Defaults */
-  --brand-cyan: oklch(0.65 0.13 180);
-  --brand-cyan-dark: oklch(0.50 0.13 180);
-  --brand-orange: oklch(0.75 0.16 65);
-  --brand-dark: oklch(0.13 0.025 250);
-  --brand-dark-mid: oklch(0.18 0.025 250);
+  /* GUYA FIBRE Brand Colors - New Design Palette */
+  --brand-teal: oklch(0.65 0.13 180);
+  --brand-teal-dark: oklch(0.55 0.13 180);
+  --brand-black: oklch(0.13 0.025 250);
+  --brand-white: oklch(0.985 0 0);
 
-  --background: oklch(0.98 0 0);
-  --foreground: oklch(0.13 0.025 250);
+  --background: oklch(1 0 0);
+  --foreground: var(--brand-black);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.13 0.025 250);
+  --card-foreground: var(--brand-black);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.13 0.025 250);
-  --primary: var(--brand-cyan);
+  --popover-foreground: var(--brand-black);
+  --primary: var(--brand-teal);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.95 0.005 250);
-  --secondary-foreground: oklch(0.13 0.025 250);
+  --secondary-foreground: var(--brand-black);
   --muted: oklch(0.95 0.005 250);
   --muted-foreground: oklch(0.5 0.02 250);
-  --accent: var(--brand-orange);
-  --accent-foreground: oklch(0.13 0.025 250);
+  --accent: var(--brand-teal);
+  --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.9 0.005 250);
   --input: oklch(0.9 0.005 250);
-  --ring: var(--brand-cyan);
-  --chart-1: var(--brand-cyan);
-  --chart-2: var(--brand-orange);
+  --ring: var(--brand-teal);
+  --chart-1: var(--brand-teal);
+  --chart-2: oklch(0.75 0.16 65);
   --chart-3: oklch(0.5 0.13 180);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.5rem;
-  --sidebar: oklch(0.13 0.025 250);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: var(--brand-cyan);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.18 0.025 250);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.22 0.025 250);
-  --sidebar-ring: var(--brand-cyan);
+  --radius: 0rem; /* New design is very sharp */
 }
 
 .dark {
   --background: oklch(0.11 0.025 250);
   --foreground: oklch(0.98 0 0);
-  /* CORRECTION: card ne doit pas être blanc en dark mode */
   --card: oklch(0.16 0.025 250);
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.16 0.025 250);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: var(--brand-cyan);
+  --primary: var(--brand-teal);
   --primary-foreground: oklch(0.1 0 0);
   --secondary: oklch(0.20 0.025 250);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.20 0.025 250);
   --muted-foreground: oklch(0.65 0.01 250);
-  --accent: var(--brand-orange);
+  --accent: var(--brand-teal);
   --accent-foreground: oklch(0.1 0 0);
   --destructive: oklch(0.5 0.2 25);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.23 0.025 250);
   --input: oklch(0.23 0.025 250);
-  --ring: var(--brand-cyan);
+  --ring: var(--brand-teal);
 }
 
 @theme inline {
-  --font-sans: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', system-ui, sans-serif;
-  --font-display: 'Space Grotesk', 'Space Grotesk Fallback', system-ui, sans-serif;
+  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-display: var(--font-display), serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -97,10 +87,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -120,9 +110,9 @@
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+    @apply font-normal; /* Serif display font looks better with normal weight */
   }
 
-  /* CORRECTION: Empêcher les fonds blancs/opaques non désirés en dark mode */
   .dark section,
   .dark div[class*="bg-white"],
   .dark div[class*="bg-gray-50"],
@@ -130,7 +120,6 @@
     background-color: inherit;
   }
 
-  /* CORRECTION: sections avec bg explicite blanc → transparent en dark */
   .dark .bg-white {
     background-color: var(--card) !important;
   }
@@ -141,7 +130,6 @@
     background-color: var(--muted) !important;
   }
 
-  /* CORRECTION: opacité blanche sur overlay */
   .dark [style*="background: white"],
   .dark [style*="background:#fff"],
   .dark [style*="background: #fff"],
@@ -155,32 +143,23 @@
   .font-display {
     font-family: var(--font-display);
   }
+  .font-serif-italic {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--brand-teal);
+  }
   .section-padding {
-    @apply py-20 px-4 md:px-8 lg:px-16;
+    @apply py-24 px-4 md:px-8 lg:px-16;
   }
   .container-wide {
     @apply max-w-7xl mx-auto;
   }
   .brand-dark-bg {
-    background-color: oklch(0.13 0.025 250);
-    color: oklch(0.985 0 0);
+    background-color: var(--brand-black);
+    color: var(--brand-white);
   }
-  .light .brand-dark-bg {
-    background-color: oklch(0.13 0.025 250);
-    color: oklch(0.985 0 0);
-  }
-  .dark .brand-dark-bg {
-    background-color: oklch(0.10 0.025 250);
-    color: oklch(0.985 0 0);
-  }
-  .brand-cyan-text {
-    color: oklch(0.65 0.13 180);
-  }
-  .brand-orange-text {
-    color: oklch(0.75 0.16 65);
-  }
-  .glow-cyan {
-    box-shadow: 0 0 30px oklch(0.65 0.13 180 / 0.25);
+  .brand-teal-text {
+    color: var(--brand-teal);
   }
   .text-balance {
     text-wrap: balance;

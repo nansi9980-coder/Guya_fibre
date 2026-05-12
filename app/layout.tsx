@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, Plus_Jakarta_Sans } from 'next/font/google'
+import { Instrument_Serif, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/lib/i18n/context'
@@ -9,13 +9,15 @@ import './globals.css'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://guyafibre.com'
 
-const spaceGrotesk = Space_Grotesk({
+const instrumentSerif = Instrument_Serif({
   subsets: ['latin'],
   variable: '--font-display',
+  weight: '400',
+  style: ['normal', 'italic'],
   display: 'swap',
 })
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
@@ -122,7 +124,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" className={`${spaceGrotesk.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
+    <html lang="fr" className={`${instrumentSerif.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/images/site-icon.png" type="image/png" />
