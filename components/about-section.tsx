@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import { Leaf, Map, ShieldCheck, Zap, Users, Gift } from "lucide-react"
+import { Leaf, Map, ShieldCheck, Zap, Users, Gift, Info } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
+import { ScrollReveal } from "./scroll-reveal"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guyafibrebackend-production.up.railway.app'
 
 const strengths = [
   { icon: Leaf, titleKey: "about.climate", descKey: "about.climateDesc", image: "/images/project-village.jpg" },
@@ -49,7 +50,6 @@ export function AboutSection() {
       .then(data => {
         if (data) {
           const raw = data.content ?? data
-          // Merge: backend keys may be flat (badge, title…) or prefixed (about.badge…)
           const merged: Record<string, string> = { ...STATIC_DEFAULTS }
           for (const [k, v] of Object.entries(raw)) {
             if (typeof v === 'string') {
@@ -68,90 +68,89 @@ export function AboutSection() {
   }
 
   return (
-    <section id="apropos" className="section-padding bg-background">
-      <div className="container-wide">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* Left — text */}
+    <section id="apropos" className="section-padding bg-background relative overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      
+      <div className="container-wide relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          {/* Left — text content */}
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 rounded-full text-sm text-primary font-medium mb-5 border border-primary/20">
-              {getText("about.badge")}
-            </div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6 text-balance">
-              {getText("about.title")}{" "}
-              <span className="text-primary">{getText("about.titleHighlight")}</span>
-            </h2>
-            <p className="text-foreground/80 dark:text-slate-300 leading-relaxed mb-5 text-pretty">
-              {getText("about.description1")}
-            </p>
-            <p className="text-foreground/80 dark:text-slate-300 leading-relaxed mb-8 text-pretty">
-              {getText("about.description2")}
-            </p>
+            <ScrollReveal>
+              <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-xs font-bold text-primary mb-8 tracking-widest uppercase">
+                <Info className="w-4 h-4" />
+                <span>{getText("about.badge")}</span>
+              </div>
+            </ScrollReveal>
 
-            {/* Team image */}
-            <div className="relative rounded-2xl overflow-hidden mb-8 aspect-video">
-              <Image
-                src="/images/team-work.jpg"
-                alt="Équipe GUYA FIBRE"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-white text-sm font-medium">{t("about.teamOnField")}</p>
-                <p className="text-white/70 text-xs">{t("about.teamOnFieldDesc")}</p>
-              </div>
-            </div>
+            <ScrollReveal delay={1}>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-8 text-balance leading-tight">
+                {getText("about.title")}{" "}
+                <span className="text-primary">{getText("about.titleHighlight")}</span>
+              </h2>
+            </ScrollReveal>
 
-            {/* Founder card */}
-            <div className="bg-white/95 dark:bg-slate-950/95 rounded-xl p-5 flex items-start gap-4 border border-slate-200/70 dark:border-slate-800/70 shadow-sm">
-              <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold font-display text-lg shrink-0">
-                {getText("about.founderName").split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+            <ScrollReveal delay={2}>
+              <div className="space-y-6 text-muted-foreground text-lg leading-relaxed mb-10">
+                <p>{getText("about.description1")}</p>
+                <p>{getText("about.description2")}</p>
               </div>
-              <div>
-                <div className="font-semibold text-foreground dark:text-white font-display text-base md:text-lg">{getText("about.founderName")}</div>
-                <div className="text-sm text-foreground/70 dark:text-white/75 mb-2">{getText("about.founderRole")}</div>
-                <p className="text-sm text-foreground/80 dark:text-white/70 leading-relaxed">
-                  {getText("about.founderBio")}
-                </p>
+            </ScrollReveal>
+
+            <ScrollReveal delay={3}>
+              {/* Founder card */}
+              <div className="glass rounded-3xl p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6 border border-primary/10 shadow-xl shadow-primary/5 group">
+                <div className="w-20 h-20 rounded-2xl bg-primary flex items-center justify-center text-white font-black font-display text-2xl shrink-0 shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform duration-500">
+                  {getText("about.founderName").split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+                </div>
+                <div className="text-center sm:text-left">
+                  <h4 className="font-display text-xl font-bold text-foreground mb-1">{getText("about.founderName")}</h4>
+                  <p className="text-primary font-bold text-sm mb-4 uppercase tracking-wider">{getText("about.founderRole")}</p>
+                  <p className="text-muted-foreground text-sm italic leading-relaxed">
+                    &ldquo;{getText("about.founderBio")}&rdquo;
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
 
-          {/* Right — strengths with images */}
-          <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {strengths.map((s) => {
-                const Icon = s.icon
-                return (
-                  <div
-                    key={s.titleKey}
-                    className="group relative bg-white/95 dark:bg-slate-950/95 rounded-xl border border-slate-200/70 dark:border-slate-800/70 hover:border-primary/30 hover:shadow-lg transition-all duration-300 overflow-hidden"
-                  >
+          {/* Right — Strengths grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {strengths.map((s, i) => {
+              const Icon = s.icon
+              return (
+                <ScrollReveal key={s.titleKey} delay={((i % 3) + 1) as 1 | 2 | 3 | 4}>
+                  <div className="group h-full glass rounded-3xl overflow-hidden border border-border hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 flex flex-col shadow-sm">
                     <div className="relative h-32 overflow-hidden">
                       <Image
                         src={s.image}
                         alt={getText(s.titleKey)}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-card dark:from-muted via-card/60 dark:via-muted/60 to-transparent" />
-                      <div className="absolute top-3 left-3 w-10 h-10 rounded-lg bg-primary/90 flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-primary-foreground" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent" />
+                      <div className="absolute top-4 left-4 w-12 h-12 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-12 transition-transform">
+                        <Icon className="w-6 h-6 text-white" />
                       </div>
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-display font-semibold text-foreground dark:text-white text-sm mb-1.5">
+                    <div className="p-6">
+                      <h3 className="font-display font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                         {getText(s.titleKey)}
                       </h3>
-                      <p className="text-sm text-foreground/75 dark:text-slate-300 leading-relaxed">
+                      <p className="text-muted-foreground text-sm leading-relaxed">
                         {getText(s.descKey)}
                       </p>
                     </div>
                   </div>
-                )
-              })}
-            </div>
+                </ScrollReveal>
+              )
+            })}
           </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+</div>
         </div>
       </div>
     </section>

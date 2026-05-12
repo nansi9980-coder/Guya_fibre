@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { MapPin, ArrowRight, ChevronDown } from "lucide-react"
+import { MapPin, ArrowRight, ChevronDown, Sparkles } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
+import { ScrollReveal } from "./scroll-reveal"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guyafibrebackend-production.up.railway.app'
 
 const DEFAULTS = {
   titleFr: 'La Fibre Optique pour la Guyane',
@@ -17,7 +18,7 @@ const DEFAULTS = {
 }
 
 export function HeroSection() {
-  const { locale, t } = useLanguage()
+  const { locale } = useLanguage()
   const [content, setContent] = useState(DEFAULTS)
 
   useEffect(() => {
@@ -33,71 +34,107 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[90vh] lg:min-h-screen flex items-center overflow-hidden bg-background"
       aria-label="Section d'accueil"
     >
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
-        role="img"
-        aria-label="Technicien fibre optique en intervention en Guyane"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+      {/* Background with mesh gradient and subtle movement */}
+      <div className="absolute inset-0 bg-gradient-mesh opacity-40" />
+      
+      {/* Visual elements */}
+      <div className="absolute right-0 top-0 h-full w-full lg:w-1/2 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent lg:z-10" />
+        <div 
+          className="absolute inset-0 lg:scale-110 opacity-40 lg:opacity-100 grayscale hover:grayscale-0 transition-all duration-1000"
+          style={{ 
+            backgroundImage: "url('/images/hero-bg.jpg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            maskImage: 'linear-gradient(to left, black 60%, transparent)',
+            WebkitMaskImage: 'linear-gradient(to left, black 60%, transparent)'
+          }}
+        />
+        
+        {/* Animated lines SVG */}
+        <svg
+          className="absolute right-0 top-0 h-full w-full opacity-20 pointer-events-none hidden lg:block z-20"
+          viewBox="0 0 600 800"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {Array.from({ length: 12 }).map((_, i) => (
+            <path
+              key={i}
+              d={`M${600 - i * 40} 0 Q${400 - i * 30} 400 ${500 - i * 35} 800`}
+              stroke="var(--brand-cyan)"
+              strokeWidth="0.5"
+              fill="none"
+              style={{ opacity: 1 - i * 0.08 }}
+            />
+          ))}
+        </svg>
+      </div>
 
-      <svg
-        className="absolute right-0 top-0 h-full w-1/2 opacity-10 pointer-events-none hidden lg:block"
-        viewBox="0 0 600 800"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        {Array.from({ length: 14 }).map((_, i) => (
-          <path
-            key={i}
-            d={`M${600 - i * 30} 0 Q${400 - i * 20} 400 ${500 - i * 25} 800`}
-            stroke="oklch(0.65 0.13 180)"
-            strokeWidth="1"
-            fill="none"
-            style={{ opacity: 1 - i * 0.06 }}
-          />
-        ))}
-      </svg>
-
-      <div className="relative z-10 container-wide px-4 md:px-8 lg:px-16 py-32 pt-40">
+      <div className="relative z-30 container-wide px-4 md:px-8 lg:px-16 pt-32 pb-20">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm text-white/80 mb-8 hover:bg-white/15 transition-colors duration-300">
-            <MapPin className="w-4 h-4 text-primary animate-pulse" />
-            <span>{content.badge}</span>
-          </div>
+          <ScrollReveal>
+            <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-xs md:text-sm font-semibold text-primary mb-8 tracking-wide uppercase">
+              <Sparkles className="w-4 h-4 animate-pulse" />
+              <span>{content.badge}</span>
+            </div>
+          </ScrollReveal>
 
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 text-balance">
-            {title}
-          </h1>
+          <ScrollReveal delay={1}>
+            <h1 className="font-display text-5xl md:text-6xl lg:text-8xl font-bold text-foreground leading-[1.1] mb-8 text-balance">
+              {title.split(' ').map((word, i) => (
+                <span key={i} className={word.toLowerCase() === 'fibre' || word.toLowerCase() === 'guyane' ? 'text-primary' : ''}>
+                  {word}{' '}
+                </span>
+              ))}
+            </h1>
+          </ScrollReveal>
 
-          <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl text-pretty">
-            {content.subtitle}
-          </p>
+          <ScrollReveal delay={2}>
+            <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed mb-12 max-w-2xl text-pretty border-l-2 border-primary/20 pl-6">
+              {content.subtitle}
+            </p>
+          </ScrollReveal>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/devis"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-primary text-white font-semibold text-base hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 group"
-            >
-              {content.ctaPrimary}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              href="/services"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-semibold text-base border border-white/20 hover:bg-white/20 transition-all duration-300 hover:-translate-y-0.5"
-            >
-              {content.ctaSecondary}
-            </Link>
-          </div>
+          <ScrollReveal delay={3}>
+            <div className="flex flex-col sm:flex-row gap-5">
+              <Link
+                href="/devis"
+                className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-2xl bg-primary text-white font-bold text-lg hover:bg-primary/90 transition-all duration-300 shadow-2xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-1 group"
+              >
+                {content.ctaPrimary}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-2xl glass text-foreground font-bold text-lg hover:bg-muted/50 transition-all duration-300 hover:-translate-y-1"
+              >
+                {content.ctaSecondary}
+              </Link>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={4} className="mt-16 flex items-center gap-6">
+            <div className="flex -space-x-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="w-12 h-12 rounded-full border-4 border-background bg-muted overflow-hidden">
+                  <img src={`https://i.pravatar.cc/150?img=${i + 10}`} alt="User" />
+                </div>
+              ))}
+            </div>
+            <div className="text-sm">
+              <div className="font-bold text-foreground">5000+ entreprises connectées</div>
+              <div className="text-muted-foreground">Expertise locale reconnue</div>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <ChevronDown className="w-6 h-6 text-white/40" />
+      <div className="absolute bottom-10 left-10 hidden xl:flex items-center gap-4 text-xs font-medium text-muted-foreground/50 uppercase tracking-[0.2em] [writing-mode:vertical-lr] animate-float">
+        scroll down <ChevronDown className="w-4 h-4 rotate-[-90deg]" />
       </div>
     </section>
   )

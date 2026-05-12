@@ -188,6 +188,42 @@
   .text-pretty {
     text-wrap: pretty;
   }
+
+  /* Reveal on Scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* Glassmorphism */
+  .glass {
+    background: color-mix(in srgb, var(--card) 60%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+  }
+
+  /* Premium Gradients */
+  .bg-gradient-brand {
+    background: linear-gradient(135deg, var(--brand-cyan) 0%, var(--brand-cyan-dark) 100%);
+  }
+  
+  .bg-gradient-mesh {
+    background-image: 
+      radial-gradient(at 0% 0%, color-mix(in srgb, var(--brand-cyan) 15%, transparent) 0, transparent 50%),
+      radial-gradient(at 100% 100%, color-mix(in srgb, var(--brand-orange) 10%, transparent) 0, transparent 50%);
+  }
 }
 
 /* Custom animations */

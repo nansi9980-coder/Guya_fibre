@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useLanguage } from "@/lib/i18n/context"
+import { ScrollReveal } from "./scroll-reveal"
+import { Briefcase, UserCheck, Map, Users } from "lucide-react"
 
 function useCountUp(target: number, duration = 2000, start = false) {
   const [count, setCount] = useState(0)
@@ -22,18 +24,32 @@ function useCountUp(target: number, duration = 2000, start = false) {
   return count
 }
 
-function StatCard({ value, suffix, label, description, start }: {
-  value: number; suffix: string; label: string; description: string; start: boolean
+const ICON_MAP = {
+  "stats.projects": Briefcase,
+  "stats.clients": UserCheck,
+  "stats.availability": Map,
+  "stats.connected": Users,
+}
+
+function StatCard({ value, suffix, label, description, start, iconKey, delay }: {
+  value: number; suffix: string; label: string; description: string; start: boolean; iconKey: string; delay: 1 | 2 | 3 | 4
 }) {
   const count = useCountUp(value, 1800, start)
+  const Icon = ICON_MAP[iconKey as keyof typeof ICON_MAP] || Briefcase
+  
   return (
-    <div className="flex flex-col items-center text-center p-8">
-      <div className="font-display text-5xl md:text-6xl font-bold text-primary mb-2 tabular-nums">
-        {count}{suffix}
+    <ScrollReveal delay={delay} className="h-full">
+      <div className="group h-full flex flex-col items-center text-center p-8 glass rounded-3xl hover:border-primary/50 transition-all duration-500 hover:-translate-y-2">
+        <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-500">
+          <Icon className="w-7 h-7" />
+        </div>
+        <div className="font-display text-4xl md:text-5xl font-bold text-foreground mb-3 tabular-nums">
+          {count}{suffix}
+        </div>
+        <div className="font-display text-base font-bold text-foreground mb-2 uppercase tracking-wider">{label}</div>
+        <div className="text-sm text-muted-foreground leading-relaxed">{description}</div>
       </div>
-      <div className="font-display text-lg font-semibold text-foreground mb-1">{label}</div>
-      <div className="text-sm text-muted-foreground">{description}</div>
-    </div>
+    </ScrollReveal>
   )
 }
 
@@ -68,17 +84,20 @@ export function StatsSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setStarted(true) },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     )
     if (ref.current) observer.observe(ref.current)
     return () => observer.disconnect()
   }, [])
 
   return (
-    <section id="stats" ref={ref} className="bg-muted/40 dark:bg-background border-y border-border">
-      <div className="container-wide px-4 md:px-8 lg:px-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-border">
-          {stats.map((stat) => (
+    <section id="stats" ref={ref} className="section-padding relative overflow-hidden bg-background">
+      {/* Decorative background element */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      
+      <div className="container-wide relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat, i) => (
             <StatCard
               key={stat.labelKey}
               value={stat.value}
@@ -86,6 +105,8 @@ export function StatsSection() {
               label={getText(stat.labelKey)}
               description={getText(stat.descKey)}
               start={started}
+              iconKey={stat.labelKey}
+              delay={(i + 1) as 1 | 2 | 3 | 4}
             />
           ))}
         </div>

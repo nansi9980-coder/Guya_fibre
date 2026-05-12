@@ -1,11 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Phone, Mail, MapPin, Send, CheckCircle } from "lucide-react"
+import { Phone, Mail, MapPin, Send, CheckCircle, MessageSquare } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
 import { PhoneInput } from "@/components/ui/phone-input"
+import { ScrollReveal } from "./scroll-reveal"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guyafibrebackend-production.up.railway.app'
 
 interface CompanySettings {
   phone: string
@@ -58,165 +59,176 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="section-padding bg-background">
-      <div className="container-wide">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Left — form */}
-          <div className="bg-card rounded-2xl border border-border p-8">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-2">
-              {t("contact.title")}
-            </h2>
-            <p className="text-sm text-muted-foreground mb-8">
-              {t("contact.subtitle")}
-            </p>
+    <section id="contact" className="section-padding bg-background relative overflow-hidden">
+      <div className="absolute top-1/2 right-0 w-1/4 h-1/2 bg-brand-orange/5 blur-[120px] rounded-full pointer-events-none" />
+      
+      <div className="container-wide relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+          {/* Left — info and direct links */}
+          <div className="space-y-12">
+            <div>
+              <ScrollReveal>
+                <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-xs font-bold text-primary mb-8 tracking-widest uppercase">
+                  <MessageSquare className="w-4 h-4" />
+                  <span>{t("contact.title")}</span>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal delay={1}>
+                <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 text-balance leading-tight">
+                  {t("contact.subtitle")}
+                </h2>
+              </ScrollReveal>
+              <ScrollReveal delay={2}>
+                <p className="text-muted-foreground text-lg leading-relaxed text-pretty max-w-xl">
+                  {t("footer.description")}
+                </p>
+              </ScrollReveal>
+            </div>
 
-            {submitted ? (
-              <div className="flex flex-col items-center justify-center py-12 gap-4 text-center">
-                <CheckCircle className="w-14 h-14 text-primary" />
-                <h3 className="font-display font-semibold text-foreground">{t("common.success")}</h3>
-                <p className="text-sm text-muted-foreground">Votre client email s&apos;est ouvert avec votre message.</p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="mt-2 text-sm text-primary hover:underline"
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
+              <ScrollReveal delay={3}>
+                <a
+                  href={`tel:${company.phone.replace(/\s/g, '')}`}
+                  className="flex items-center gap-6 p-8 glass rounded-3xl border border-border hover:border-primary/40 transition-all duration-500 group shadow-sm hover:shadow-xl hover:shadow-primary/5"
                 >
-                  {t("contact.send")}
-                </button>
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-500">
+                    <Phone className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-muted-foreground mb-1 uppercase tracking-widest">{t("contact.phone")}</div>
+                    <div className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{company.phone}</div>
+                  </div>
+                </a>
+              </ScrollReveal>
+
+              <ScrollReveal delay={4}>
+                <a
+                  href={`mailto:${company.email}`}
+                  className="flex items-center gap-6 p-8 glass rounded-3xl border border-border hover:border-primary/40 transition-all duration-500 group shadow-sm hover:shadow-xl hover:shadow-primary/5"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-500">
+                    <Mail className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-muted-foreground mb-1 uppercase tracking-widest">{t("contact.email")}</div>
+                    <div className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{company.email}</div>
+                  </div>
+                </a>
+              </ScrollReveal>
+
+              <ScrollReveal delay={4}>
+                <div className="flex items-center gap-6 p-8 glass rounded-3xl border border-border group shadow-sm">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-muted-foreground mb-1 uppercase tracking-widest">{t("contact.address")}</div>
+                    <div className="text-xl font-bold text-foreground">{company.city}</div>
+                    <div className="text-sm text-muted-foreground">Guyane française</div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
+
+          {/* Right — form */}
+          <ScrollReveal delay={2}>
+            <div className="bg-card rounded-[3rem] border border-border p-8 md:p-12 shadow-2xl shadow-black/5 dark:shadow-primary/5">
+              <div className="mb-10 text-center lg:text-left">
+                <h3 className="font-display text-2xl font-bold text-foreground mb-2">Envoyez-nous un message</h3>
+                <p className="text-sm text-muted-foreground">Réponse sous 24h ouvrées garantie.</p>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="contact-name" className="text-sm font-medium text-foreground">
-                      {t("contact.name")}
+
+              {submitted ? (
+                <div className="flex flex-col items-center justify-center py-20 gap-6 text-center">
+                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+                    <CheckCircle className="w-10 h-10 text-primary" />
+                  </div>
+                  <h3 className="font-display text-2xl font-bold text-foreground">{t("common.success")}</h3>
+                  <p className="text-muted-foreground">Votre demande a été préparée dans votre application de messagerie.</p>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-all"
+                  >
+                    Envoyer un autre message
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label htmlFor="contact-name" className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">
+                        {t("contact.name")}
+                      </label>
+                      <input
+                        id="contact-name"
+                        name="name"
+                        type="text"
+                        required
+                        value={form.name}
+                        onChange={handleChange}
+                        className="w-full px-5 py-4 bg-background border border-border rounded-2xl text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="contact-phone" className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">
+                        {t("contact.phone")}
+                      </label>
+                      <PhoneInput
+                        value={form.phone}
+                        onChange={e => setForm(prev => ({...prev, phone: e.target.value}))}
+                        countryCode={form.countryCode}
+                        onCountryCodeChange={code => setForm(prev => ({...prev, countryCode: code}))}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="contact-email" className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">
+                      {t("contact.email")}
                     </label>
                     <input
-                      id="contact-name"
-                      name="name"
-                      type="text"
-                      value={form.name}
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      required
+                      value={form.email}
                       onChange={handleChange}
-                      placeholder={t("contact.name")}
-                      className="px-4 py-3 text-sm border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
+                      className="w-full px-5 py-4 bg-background border border-border rounded-2xl text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                     />
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="contact-phone" className="text-sm font-medium text-foreground">
-                      {t("contact.phone")}
+
+                  <div className="space-y-2">
+                    <label htmlFor="contact-message" className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">
+                      {t("contact.message")}
                     </label>
-                    <PhoneInput
-                      value={form.phone}
-                      onChange={e => setForm(prev => ({...prev, phone: e.target.value}))}
-                      countryCode={form.countryCode}
-                      onCountryCodeChange={code => setForm(prev => ({...prev, countryCode: code}))}
-                      placeholder="6 94 00 00 00"
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      rows={4}
+                      required
+                      value={form.message}
+                      onChange={handleChange}
+                      className="w-full px-5 py-4 bg-background border border-border rounded-2xl text-foreground focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all resize-none"
                     />
                   </div>
-                </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-email" className="text-sm font-medium text-foreground">
-                    {t("contact.email")}
-                  </label>
-                  <input
-                    id="contact-email"
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="votre@email.com"
-                    className="px-4 py-3 text-sm border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-message" className="text-sm font-medium text-foreground">
-                    {t("contact.message")}
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    name="message"
-                    rows={5}
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder={t("contact.message")}
-                    className="px-4 py-3 text-sm border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors resize-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-primary-foreground text-sm font-semibold rounded-lg hover:bg-primary/90 transition-colors"
-                >
-                  <Send className="w-4 h-4" />
-                  {t("contact.send")}
-                </button>
-              </form>
-            )}
-          </div>
-
-          {/* Right — info */}
-          <div className="flex flex-col gap-8">
-            <div>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 rounded-full text-sm text-primary font-medium mb-5 border border-primary/20">
-                {t("contact.title")}
-              </div>
-              <h2 className="font-display text-3xl font-bold text-foreground mb-4 text-balance">
-                {t("contact.subtitle")}
-              </h2>
-              <p className="text-muted-foreground leading-relaxed text-pretty">
-                {t("footer.description")}
-              </p>
+                  <button
+                    type="submit"
+                    className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-primary text-white font-bold rounded-2xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1"
+                  >
+                    <Send className="w-5 h-5" />
+                    {t("contact.send")}
+                  </button>
+                </form>
+              )}
             </div>
-
-            <div className="flex flex-col gap-5">
-              <a
-                href={`tel:${company.phone.replace(/\s/g, '')}`}
-                className="flex items-center gap-4 p-5 bg-card rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all duration-200 group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                  <Phone className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground mb-0.5">{t("contact.phone")}</div>
-                  <div className="font-semibold text-foreground">{company.phone}</div>
-                </div>
-              </a>
-
-              <a
-                href={`mailto:${company.email}`}
-                className="flex items-center gap-4 p-5 bg-card rounded-xl border border-border hover:border-primary/30 hover:shadow-md transition-all duration-200 group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                  <Mail className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground mb-0.5">{t("contact.email")}</div>
-                  <div className="font-semibold text-foreground">{company.email}</div>
-                </div>
-              </a>
-
-              <div className="flex items-center gap-4 p-5 bg-card rounded-xl border border-border">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground mb-0.5">{t("contact.address")}</div>
-                  <div className="font-semibold text-foreground">{company.city}</div>
-                  <div className="text-sm text-muted-foreground">Guyane française</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Intervention territory */}
-            <div className="bg-primary/10 border border-primary/20 rounded-xl p-5">
-              <div className="text-sm font-semibold text-primary mb-1">{t("common.ourLocation")}</div>
-              <p className="text-sm text-muted-foreground">
-                Toute la Guyane française — zones urbaines, rurales et sites isolés de l&apos;intérieur.
-              </p>
-            </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
+  )
+}
+section>
   )
 }
