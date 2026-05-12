@@ -150,9 +150,3 @@ export function AboutSection() {
     </section>
   )
 }
-</div>
-        </div>
-      </div>
-    </section>
-  )
-}

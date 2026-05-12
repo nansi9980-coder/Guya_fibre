@@ -117,30 +117,3 @@ export function FAQSection() {
     </section>
   )
 }
-       </Link>
-          </div>
-
-          {/* Right — accordion */}
-          <div>
-            <Accordion type="single" collapsible className="flex flex-col gap-2">
-              {faqs.map((faq, i) => (
-                <AccordionItem
-                  key={i}
-                  value={`faq-${i}`}
-                  className="bg-card/80 dark:bg-secondary/60 border border-border/60 rounded-xl px-5 overflow-hidden hover:border-border hover:bg-card dark:hover:bg-secondary transition-all data-[state=open]:border-primary/50 data-[state=open]:bg-card dark:data-[state=open]:bg-secondary data-[state=open]:shadow-lg"
-                >
-                  <AccordionTrigger className="text-sm font-semibold text-foreground text-left py-4 hover:no-underline hover:text-primary transition-colors">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}

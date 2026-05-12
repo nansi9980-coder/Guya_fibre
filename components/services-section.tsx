@@ -205,10 +205,3 @@ export function ServicesSection() {
     </section>
   )
 }
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}

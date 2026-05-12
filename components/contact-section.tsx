@@ -229,6 +229,3 @@ export function ContactSection() {
     </section>
   )
 }
-section>
-  )
-}

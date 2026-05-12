@@ -124,22 +124,3 @@ export function ProcessSection() {
     </section>
   )
 }
-">
-                      <Icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-                      <span className="text-[9px] font-bold text-primary-foreground">{step.number}</span>
-                    </div>
-                  </div>
-
-                  <h3 className="font-display text-base font-semibold text-foreground mb-2">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
