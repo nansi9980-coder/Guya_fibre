@@ -37,10 +37,6 @@ export function RealisationsSection() {
   const [projects, setProjects] = useState<Realisation[]>(FALLBACK_PROJECTS)
 
   useEffect(() => {
-    // Skip local fetch in production
-    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost') && API_URL.includes('localhost')) {
-      return
-    }
     fetch(`${API_URL}/api/realisations?limit=6`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {

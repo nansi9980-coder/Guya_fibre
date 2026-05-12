@@ -12,10 +12,6 @@ export function WhatsAppButton() {
   const [whatsappNumber, setWhatsappNumber] = useState(DEFAULT_WHATSAPP)
 
   useEffect(() => {
-    // Skip local fetch in production
-    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost') && API_URL.includes('localhost')) {
-      return
-    }
     fetch(`${API_URL}/api/settings/site/public`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
