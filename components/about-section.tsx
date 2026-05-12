@@ -44,6 +44,10 @@ export function AboutSection() {
   const [content, setContent] = useState<Record<string, string>>(STATIC_DEFAULTS)
 
   useEffect(() => {
+    // Skip local fetch in production
+    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost') && API_URL.includes('localhost')) {
+      return
+    }
     fetch(`${API_URL}/api/site-content/about`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {

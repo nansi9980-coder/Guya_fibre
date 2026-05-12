@@ -188,6 +188,13 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
 
 async function fetchActivePalette(): Promise<string> {
   try {
+    // If running in production (Vercel) and backend is localhost, skip to avoid ERR_CONNECTION_REFUSED
+    if (typeof window !== 'undefined' && 
+        !window.location.hostname.includes('localhost') && 
+        BACKEND_URL.includes('localhost')) {
+      return 'default'
+    }
+
     const res = await fetch(`${BACKEND_URL}/api/settings/theme/public`, { cache: 'no-store' })
     if (!res.ok) return 'default'
     const data = await res.json()

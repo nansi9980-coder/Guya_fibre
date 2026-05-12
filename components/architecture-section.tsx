@@ -48,17 +48,17 @@ export function ArchitectureSection() {
 
         {/* Visual Diagram Placeholder/representation */}
         <div className="relative mb-20 py-20 border-y border-black/5 dark:border-white/5">
-          <div className="flex flex-wrap justify-between items-center gap-8 relative">
+          <div className="flex justify-between items-center relative overflow-x-auto pb-8 gap-4">
             {["NRA", "PM", "D1", "D2", "D3", "BL", "CM", "Maison"].map((step, i, arr) => (
-              <div key={step} className="flex items-center flex-1 min-w-[80px]">
-                <div className="flex flex-col items-center gap-4 w-full">
-                  <div className="w-12 h-12 rounded-full border border-primary flex items-center justify-center text-[10px] font-bold text-primary bg-white dark:bg-black">
+              <div key={step} className="flex items-center gap-4 flex-none">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-12 h-12 rounded-full border border-primary flex items-center justify-center text-[10px] font-bold text-primary bg-white dark:bg-black shrink-0">
                     {step}
                   </div>
-                  <span className="text-[10px] tracking-widest uppercase font-bold text-foreground/40">{step}</span>
+                  <span className="text-[10px] tracking-widest uppercase font-bold text-foreground/40 whitespace-nowrap">{step}</span>
                 </div>
                 {i < arr.length - 1 && (
-                  <div className="h-[1px] flex-1 bg-black/10 dark:border-white/10 mx-2" />
+                  <div className="w-8 md:w-16 lg:w-24 h-[1px] bg-black/10 dark:bg-white/10 shrink-0" />
                 )}
               </div>
             ))}

@@ -51,6 +51,10 @@ export function TestimonialsSection() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" })
 
   useEffect(() => {
+    // Skip local fetch in production
+    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost') && API_URL.includes('localhost')) {
+      return
+    }
     fetch(`${API_URL}/api/site-content/testimonials`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
