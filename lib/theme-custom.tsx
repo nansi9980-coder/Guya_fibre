@@ -184,7 +184,7 @@ type ThemeContextType = {
 
 const ThemeCustomContext = createContext<ThemeContextType | undefined>(undefined)
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guyafibrebackend-production.up.railway.app'
 
 async function fetchActivePalette(): Promise<string> {
   try {
