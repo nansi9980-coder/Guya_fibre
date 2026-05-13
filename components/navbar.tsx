@@ -68,9 +68,9 @@ export function Navbar() {
           <div className="relative w-32 h-10 md:w-40 md:h-12">
             {forceWhiteLogo ? (
               <>
-                {/* Logo pour la page d'accueil (toujours blanc) - placez votre logo dans public/site-icon.png */}
+                {/* Logo pour la page d'accueil (toujours blanc) - icône dans public/images/site-icon.png */}
                 <Image
-                  src="/site-icon.png"
+                  src="/images/site-icon.png"
                   alt="GUYA FIBRE"
                   fill
                   className="object-contain"
@@ -79,17 +79,17 @@ export function Navbar() {
               </>
             ) : (
               <>
-                {/* Logo pour mode clair - placez votre logo dans public/site-icon.png */}
+                {/* Logo pour mode clair - icône dans public/images/site-icon.png */}
                 <Image
-                  src="/site-icon.png"
+                  src="/images/site-icon.png"
                   alt="GUYA FIBRE"
                   fill
                   className="object-contain block dark:hidden"
                   priority
                 />
-                {/* Logo pour mode sombre - placez votre logo dans public/site-icon-dark.png */}
+                {/* Logo pour mode sombre - icône dans public/images/site-icon-dark.png */}
                 <Image
-                  src="/site-icon-dark.png"
+                  src="/images/site-icon-dark.png"
                   alt=""
                   aria-hidden="true"
                   fill

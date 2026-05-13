@@ -96,16 +96,16 @@ export function Footer() {
                 // Footer fond sombre en mode sombre → logo BLANC
                 // Pour changer les logos par défaut, modifier les src ci-dessous
                 <div className="relative h-12 w-40">
-                  {/* Logo pour mode clair - placez votre logo dans public/site-icon-dark.png */}
+                  {/* Logo pour mode clair - icône dans public/images/site-icon-dark.png */}
                   <Image
-                    src="/site-icon-dark.png"
+                    src="/images/site-icon-dark.png"
                     alt={company.name}
                     fill
                     className="object-contain object-left block dark:hidden"
                   />
-                  {/* Logo pour mode sombre - placez votre logo dans public/site-icon.png */}
+                  {/* Logo pour mode sombre - icône dans public/images/site-icon.png */}
                   <Image
-                    src="/site-icon.png"
+                    src="/images/site-icon.png"
                     alt=""
                     aria-hidden="true"
                     fill
@@ -228,16 +228,16 @@ export function Footer() {
                     />
                   ) : (
                     <div className="relative h-14 w-44">
-                      {/* Logo pour mode clair - placez votre logo dans public/site-icon-dark.png */}
+                      {/* Logo pour mode clair - icône dans public/images/site-icon-dark.png */}
                       <Image
-                        src="/site-icon-dark.png"
+                        src="/images/site-icon-dark.png"
                         alt={company.name}
                         fill
                         className="object-contain object-left block dark:hidden"
                       />
-                      {/* Logo pour mode sombre - placez votre logo dans public/site-icon.png */}
+                      {/* Logo pour mode sombre - icône dans public/images/site-icon.png */}
                       <Image
-                        src="/site-icon.png"
+                        src="/images/site-icon.png"
                         alt=""
                         aria-hidden="true"
                         fill
