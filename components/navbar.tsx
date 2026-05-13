@@ -81,7 +81,7 @@ export function Navbar() {
               <>
                 {/* Logo pour mode clair - icône dans public/images/site-icon.png */}
                 <Image
-                  src="/images/site-icon.png"
+                  src="/images/site-icon-dark.png"
                   alt="GUYA FIBRE"
                   fill
                   className="object-contain block dark:hidden"
