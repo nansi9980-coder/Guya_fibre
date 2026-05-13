@@ -47,11 +47,15 @@ export function Navbar() {
     setMobileOpen(false)
   }, [pathname])
 
+  // Sur la home en haut (hero transparent) → toujours afficher le logo BLANC quel que soit le thème
+  // Ailleurs (ou après scroll) → BLANC en mode sombre, NOIR en mode clair
+  const forceWhiteLogo = isHome && !isScrolled
+
   return (
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md',
-        isHome
+        isHome && !isScrolled
           ? 'bg-transparent border-transparent shadow-none'
           : isScrolled
             ? 'bg-white/90 dark:bg-black/90 shadow-lg border-b border-slate-200/60 dark:border-black/60'
@@ -61,24 +65,41 @@ export function Navbar() {
       <div className="mx-auto flex items-center justify-between h-16 md:h-20 px-4 md:px-6 lg:px-10 max-w-[1600px]">
         <Link href="/" className="flex items-center gap-3 shrink-0">
           {/*
-            Le logo (site-icon.png) est blanc sur fond transparent.
-            - isHomeTop (hero transparent) → filter:none → logo blanc
-            - scrolled light mode → invert(1) → logo NOIR sur fond blanc
-            - scrolled dark mode → filter:none → logo blanc sur fond sombre
+            Deux logos superposés, on bascule via Tailwind dark:
+            - site-icon.png       → version BLANCHE (fond transparent) — visible en mode CLAIR
+            - site-icon-dark.png  → version NOIRE  (fond transparent) — visible en mode SOMBRE
+            Sur la home tout en haut (hero sombre), on force la version BLANCHE pour le contraste.
           */}
-          <div
-            className={cn(
-              'relative w-32 h-10 md:w-40 md:h-12',
-              isHome ? '[filter:none]' : '[filter:invert(1)] dark:[filter:none]'
+          <div className="relative w-32 h-10 md:w-40 md:h-12">
+            {forceWhiteLogo ? (
+              <Image
+                src="/site-icon.png"
+                alt="GUYA FIBRE"
+                fill
+                className="object-contain"
+                priority
+              />
+            ) : (
+              <>
+                {/* Logo BLANC — visible en mode clair uniquement */}
+                <Image
+                  src="/site-icon.png"
+                  alt="GUYA FIBRE"
+                  fill
+                  className="object-contain block dark:hidden"
+                  priority
+                />
+                {/* Logo NOIR — visible en mode sombre uniquement */}
+                <Image
+                  src="/site-icon-dark.png"
+                  alt=""
+                  aria-hidden="true"
+                  fill
+                  className="object-contain hidden dark:block"
+                  priority
+                />
+              </>
             )}
-          >
-            <Image
-              src="/site-icon.png"
-              alt="GUYA FIBRE"
-              fill
-              className="object-contain"
-              priority
-            />
           </div>
         </Link>
 
@@ -90,7 +111,7 @@ export function Navbar() {
                 <button
                   className={cn(
                     'flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                    isHome ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
+                    forceWhiteLogo ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
                   )}
                 >
                   {link.label}
@@ -115,8 +136,8 @@ export function Navbar() {
                 className={cn(
                   'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
                   pathname === link.href
-                    ? isHome ? 'text-white font-semibold underline underline-offset-4' : 'text-primary font-semibold'
-                    : isHome ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
+                    ? forceWhiteLogo ? 'text-white font-semibold underline underline-offset-4' : 'text-primary font-semibold'
+                    : forceWhiteLogo ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
                 )}
               >
                 {link.label}
@@ -133,7 +154,7 @@ export function Navbar() {
             href="/devis"
             className={cn(
               'px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200',
-              isHome
+              forceWhiteLogo
                 ? 'bg-white/15 text-white border border-white/35 hover:bg-white/25'
                 : 'bg-primary text-primary-foreground hover:bg-primary/90'
             )}
@@ -147,7 +168,7 @@ export function Navbar() {
           onClick={() => setMobileOpen(!mobileOpen)}
           className={cn(
             'lg:hidden p-2 rounded-lg transition-colors',
-            isHome ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
+            forceWhiteLogo ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
           )}
           aria-label="Menu mobile"
         >

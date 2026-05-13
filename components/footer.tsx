@@ -78,14 +78,34 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Column 1 — Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-5 [filter:invert(1)_brightness(1.1)] dark:[filter:none]">
-              <Image
-                src={logoSrc}
-                alt={company.name}
-                width={160}
-                height={56}
-                className="h-12 w-auto object-contain"
-              />
+            <Link href="/" className="inline-block mb-5">
+              {company.logo ? (
+                // Logo personnalisé venant du backend — on l'affiche tel quel
+                <Image
+                  src={logoSrc}
+                  alt={company.name}
+                  width={160}
+                  height={56}
+                  className="h-12 w-auto object-contain"
+                />
+              ) : (
+                // Logo par défaut — deux versions selon le thème
+                <div className="relative h-12 w-40">
+                  <Image
+                    src="/site-icon.png"
+                    alt={company.name}
+                    fill
+                    className="object-contain object-left block dark:hidden"
+                  />
+                  <Image
+                    src="/site-icon-dark.png"
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    className="object-contain object-left hidden dark:block"
+                  />
+                </div>
+              )}
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               {t("footer.description")}
@@ -191,13 +211,31 @@ export function Footer() {
               <div className="flex items-center gap-6">
                 <div className="relative">
                   <div className="absolute -inset-2 bg-primary/20 rounded-xl blur-xl animate-pulse" />
-                  <Image
-                    src={logoSrc}
-                    alt={company.name}
-                    width={180}
-                    height={64}
-                    className="relative h-14 w-auto object-contain [filter:invert(1)_brightness(1.1)] dark:[filter:none]"
-                  />
+                  {company.logo ? (
+                    <Image
+                      src={logoSrc}
+                      alt={company.name}
+                      width={180}
+                      height={64}
+                      className="relative h-14 w-auto object-contain"
+                    />
+                  ) : (
+                    <div className="relative h-14 w-44">
+                      <Image
+                        src="/site-icon.png"
+                        alt={company.name}
+                        fill
+                        className="object-contain object-left block dark:hidden"
+                      />
+                      <Image
+                        src="/site-icon-dark.png"
+                        alt=""
+                        aria-hidden="true"
+                        fill
+                        className="object-contain object-left hidden dark:block"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="hidden md:block h-12 w-px bg-gradient-to-b from-transparent via-primary/40 to-transparent" />
                 <div className="text-center md:text-left">
