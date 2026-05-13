@@ -94,7 +94,7 @@ export function Footer() {
                 // Footer fond sombre en mode sombre → logo BLANC
                 <div className="relative h-12 w-40">
                   <Image
-                    src="/site-icon-dark.png"
+                    src="/site-icon.png"
                     alt={company.name}
                     fill
                     className="object-contain object-left block dark:hidden"

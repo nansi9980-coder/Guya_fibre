@@ -47,19 +47,13 @@ export function Navbar() {
     setMobileOpen(false)
   }, [pathname])
 
-  // Sur la home → toujours afficher le logo BLANC (le hero a un fond sombre permanent, la navbar reste transparente)
-  // Ailleurs → BLANC en mode clair, NOIR en mode sombre
-  const forceWhiteLogo = isHome
+  // Navbar transparente partout → logo BLANC partout pour être visible sur tous les backgrounds
+  const forceWhiteLogo = true
 
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md',
-        isHome
-          ? 'bg-transparent border-transparent shadow-none'
-          : isScrolled
-            ? 'bg-white/90 dark:bg-black/90 shadow-lg border-b border-slate-200/60 dark:border-black/60'
-            : 'bg-white/75 dark:bg-black/75 border-b border-slate-200/50 dark:border-black/50'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-transparent border-transparent shadow-none'
       )}
     >
       <div className="mx-auto flex items-center justify-between h-16 md:h-20 px-4 md:px-6 lg:px-10 max-w-[1600px]">
@@ -89,9 +83,9 @@ export function Navbar() {
                   className="object-contain block dark:hidden"
                   priority
                 />
-                {/* Logo NOIR — visible en mode sombre uniquement */}
+                {/* Logo BLANC — visible en mode sombre aussi (en attente de version sombre) */}
                 <Image
-                  src="/site-icon-dark.png"
+                  src="/site-icon.png"
                   alt=""
                   aria-hidden="true"
                   fill
