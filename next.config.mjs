@@ -24,7 +24,7 @@ const nextConfig = {
         protocol: apiProtocol,
         hostname: apiHostname,
         ...(apiPort ? { port: apiPort } : {}),
-        pathname: '/api/medias/file/**',
+        pathname: '/files/**',
       },
     ],
   },
