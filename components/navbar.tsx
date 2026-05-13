@@ -63,19 +63,23 @@ export function Navbar() {
             Sur les autres pages → bascule selon le thème :
             - site-icon.png       → BLANCHE → mode CLAIR
             - site-icon-dark.png  → NOIRE   → mode SOMBRE
+            Pour changer les logos, modifier les src dans les Image ci-dessous
           */}
           <div className="relative w-32 h-10 md:w-40 md:h-12">
             {forceWhiteLogo ? (
-              <Image
-                src="/site-icon.png"
-                alt="GUYA FIBRE"
-                fill
-                className="object-contain"
-                priority
-              />
+              <>
+                {/* Logo pour la page d'accueil (toujours blanc) - placez votre logo dans public/site-icon.png */}
+                <Image
+                  src="/site-icon.png"
+                  alt="GUYA FIBRE"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </>
             ) : (
               <>
-                {/* Logo BLANC — visible en mode clair uniquement */}
+                {/* Logo pour mode clair - placez votre logo dans public/site-icon.png */}
                 <Image
                   src="/site-icon.png"
                   alt="GUYA FIBRE"
@@ -83,7 +87,7 @@ export function Navbar() {
                   className="object-contain block dark:hidden"
                   priority
                 />
-                {/* Logo NOIR — visible en mode sombre */}
+                {/* Logo pour mode sombre - placez votre logo dans public/site-icon-dark.png */}
                 <Image
                   src="/site-icon-dark.png"
                   alt=""

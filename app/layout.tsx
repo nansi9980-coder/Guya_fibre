@@ -73,6 +73,7 @@ export const metadata: Metadata = {
         alt: 'GUYA FIBRE - Technicien en intervention fibre optique',
       },
       {
+        // Logo pour les métadonnées Open Graph - modifier le chemin ici si nécessaire
         url: `${siteUrl}/images/logo.jpg`,
         width: 1200,
         height: 630,
@@ -156,6 +157,7 @@ export default function RootLayout({
               openingHours: 'Mo-Fr 08:00-18:00, Sa 08:00-12:00',
               areaServed: 'Guyane française',
               sameAs: ['https://wa.me/594694435484'],
+              // Images pour les données structurées - modifier les chemins ici si nécessaire
               image: `${siteUrl}/images/logo.jpg`,
               logo: `${siteUrl}/images/logo.jpg`,
               priceRange: '$$',

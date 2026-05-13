@@ -53,9 +53,11 @@ export function Footer() {
   const locationCountry = t("footer.locationCountry")
   const phoneRegion = t("footer.phoneRegion")
 
+  // Chemin du logo personnalisé ou par défaut
+  // Pour changer le logo par défaut, modifier les chemins ci-dessous
   const logoSrc = company.logo
     ? (company.logo.startsWith('http') ? company.logo : `${API_URL}${company.logo}`)
-    : "/images/logo.jpg"
+    : "/images/site-icon.png"
 
   const services = [
     { href: "/services#etudes", labelKey: "services.studies" },
@@ -92,13 +94,16 @@ export function Footer() {
                 // Logo par défaut — s'adapte au fond du footer
                 // Footer fond clair en mode clair → logo NOIR
                 // Footer fond sombre en mode sombre → logo BLANC
+                // Pour changer les logos par défaut, modifier les src ci-dessous
                 <div className="relative h-12 w-40">
+                  {/* Logo pour mode clair - placez votre logo dans public/site-icon-dark.png */}
                   <Image
                     src="/site-icon-dark.png"
                     alt={company.name}
                     fill
                     className="object-contain object-left block dark:hidden"
                   />
+                  {/* Logo pour mode sombre - placez votre logo dans public/site-icon.png */}
                   <Image
                     src="/site-icon.png"
                     alt=""
@@ -223,12 +228,14 @@ export function Footer() {
                     />
                   ) : (
                     <div className="relative h-14 w-44">
+                      {/* Logo pour mode clair - placez votre logo dans public/site-icon-dark.png */}
                       <Image
                         src="/site-icon-dark.png"
                         alt={company.name}
                         fill
                         className="object-contain object-left block dark:hidden"
                       />
+                      {/* Logo pour mode sombre - placez votre logo dans public/site-icon.png */}
                       <Image
                         src="/site-icon.png"
                         alt=""

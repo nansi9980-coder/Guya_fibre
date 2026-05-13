@@ -48,6 +48,7 @@ export default function AdminLoginPage() {
           {/* Logo */}
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-6">
+              {/* Logo de connexion admin - modifier le src ici si nécessaire */}
               <Image
                 src="/images/logo.jpg"
                 alt="GUYA FIBRE"
