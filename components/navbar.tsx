@@ -16,7 +16,7 @@ export function Navbar() {
   const [servicesOpen, setServicesOpen] = useState(false)
   const pathname = usePathname()
   const { t } = useLanguage()
-  const isHomeTop = pathname === '/' && !isScrolled && !mobileOpen
+  const isHome = pathname === '/'
 
   const navLinks = [
     { href: '/', label: t('nav.home') },
@@ -51,7 +51,7 @@ export function Navbar() {
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md',
-        isHomeTop
+        isHome
           ? 'bg-transparent border-transparent shadow-none'
           : isScrolled
             ? 'bg-white/90 dark:bg-black/90 shadow-lg border-b border-slate-200/60 dark:border-black/60'
@@ -69,7 +69,7 @@ export function Navbar() {
           <div
             className={cn(
               'relative w-32 h-10 md:w-40 md:h-12',
-              isHomeTop ? '[filter:none]' : '[filter:invert(1)] dark:[filter:none]'
+              isHome ? '[filter:none]' : '[filter:invert(1)] dark:[filter:none]'
             )}
           >
             <Image
@@ -90,7 +90,7 @@ export function Navbar() {
                 <button
                   className={cn(
                     'flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                    isHomeTop ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
+                    isHome ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
                   )}
                 >
                   {link.label}
@@ -115,8 +115,8 @@ export function Navbar() {
                 className={cn(
                   'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
                   pathname === link.href
-                    ? isHomeTop ? 'text-white font-semibold underline underline-offset-4' : 'text-primary font-semibold'
-                    : isHomeTop ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
+                    ? isHome ? 'text-white font-semibold underline underline-offset-4' : 'text-primary font-semibold'
+                    : isHome ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
                 )}
               >
                 {link.label}
@@ -133,7 +133,7 @@ export function Navbar() {
             href="/devis"
             className={cn(
               'px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200',
-              isHomeTop
+              isHome
                 ? 'bg-white/15 text-white border border-white/35 hover:bg-white/25'
                 : 'bg-primary text-primary-foreground hover:bg-primary/90'
             )}
@@ -147,7 +147,7 @@ export function Navbar() {
           onClick={() => setMobileOpen(!mobileOpen)}
           className={cn(
             'lg:hidden p-2 rounded-lg transition-colors',
-            isHomeTop ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
+            isHome ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
           )}
           aria-label="Menu mobile"
         >
