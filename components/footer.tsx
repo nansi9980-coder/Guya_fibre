@@ -89,18 +89,16 @@ export function Footer() {
                   className="h-12 w-auto object-contain"
                 />
               ) : (
-                // Logo par défaut — deux versions selon le thème
-                // Footer a fond clair en mode clair → logo NOIR
-                // Footer a fond sombre en mode sombre → logo BLANC
+                // Logo par défaut — BLANC en mode clair, NOIR en mode sombre
                 <div className="relative h-12 w-40">
                   <Image
-                    src="/site-icon-dark.png"
+                    src="/site-icon.png"
                     alt={company.name}
                     fill
                     className="object-contain object-left block dark:hidden"
                   />
                   <Image
-                    src="/site-icon.png"
+                    src="/site-icon-dark.png"
                     alt=""
                     aria-hidden="true"
                     fill
@@ -224,13 +222,13 @@ export function Footer() {
                   ) : (
                     <div className="relative h-14 w-44">
                       <Image
-                        src="/site-icon-dark.png"
+                        src="/site-icon.png"
                         alt={company.name}
                         fill
                         className="object-contain object-left block dark:hidden"
                       />
                       <Image
-                        src="/site-icon.png"
+                        src="/site-icon-dark.png"
                         alt=""
                         aria-hidden="true"
                         fill
