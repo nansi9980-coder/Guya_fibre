@@ -8,7 +8,7 @@ import { useLanguage } from "@/lib/i18n/context"
 import { resolveMediaUrl } from "@/lib/utils/media"
 import { ScrollReveal } from "./scroll-reveal"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guyafibrebackend-production.up.railway.app'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guya-fibre-backend.onrender.com'
 
 interface Realisation {
   id: string

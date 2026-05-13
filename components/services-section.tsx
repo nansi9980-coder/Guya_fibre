@@ -5,7 +5,7 @@ import { Compass, HardHat, Home, Zap, Server, ArrowRight } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
 import { ScrollReveal } from "./scroll-reveal"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guyafibrebackend-production.up.railway.app'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guya-fibre-backend.onrender.com'
 
 const ICON_MAP: Record<string, any> = {
   Compass, HardHat, Home, Zap, Server,

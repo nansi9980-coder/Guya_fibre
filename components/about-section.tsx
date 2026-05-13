@@ -6,7 +6,7 @@ import { Leaf, Map, ShieldCheck, Zap, Users, Gift, Info } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
 import { ScrollReveal } from "./scroll-reveal"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guyafibrebackend-production.up.railway.app'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guya-fibre-backend.onrender.com'
 
 const strengths = [
   { icon: Leaf, titleKey: "about.climate", descKey: "about.climateDesc", image: "/images/project-village.jpg" },
