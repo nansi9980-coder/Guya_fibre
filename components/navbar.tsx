@@ -47,15 +47,15 @@ export function Navbar() {
     setMobileOpen(false)
   }, [pathname])
 
-  // Sur la home en haut (hero transparent) → toujours afficher le logo BLANC quel que soit le thème
-  // Ailleurs (ou après scroll) → BLANC en mode sombre, NOIR en mode clair
-  const forceWhiteLogo = isHome && !isScrolled
+  // Sur la home → toujours afficher le logo BLANC (le hero a un fond sombre permanent, la navbar reste transparente)
+  // Ailleurs → BLANC en mode clair, NOIR en mode sombre
+  const forceWhiteLogo = isHome
 
   return (
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md',
-        isHome && !isScrolled
+        isHome
           ? 'bg-transparent border-transparent shadow-none'
           : isScrolled
             ? 'bg-white/90 dark:bg-black/90 shadow-lg border-b border-slate-200/60 dark:border-black/60'
@@ -65,10 +65,10 @@ export function Navbar() {
       <div className="mx-auto flex items-center justify-between h-16 md:h-20 px-4 md:px-6 lg:px-10 max-w-[1600px]">
         <Link href="/" className="flex items-center gap-3 shrink-0">
           {/*
-            Deux logos superposés, on bascule via Tailwind dark:
-            - site-icon.png       → version BLANCHE (fond transparent) — visible en mode CLAIR
-            - site-icon-dark.png  → version NOIRE  (fond transparent) — visible en mode SOMBRE
-            Sur la home tout en haut (hero sombre), on force la version BLANCHE pour le contraste.
+            Sur la home (forceWhiteLogo=true) → toujours logo BLANC, car la navbar est transparente sur fond hero sombre.
+            Sur les autres pages → bascule selon le thème :
+            - site-icon.png       → BLANCHE → mode CLAIR
+            - site-icon-dark.png  → NOIRE   → mode SOMBRE
           */}
           <div className="relative w-32 h-10 md:w-40 md:h-12">
             {forceWhiteLogo ? (
