@@ -83,9 +83,9 @@ export function Navbar() {
                   className="object-contain block dark:hidden"
                   priority
                 />
-                {/* Logo BLANC — visible en mode sombre aussi (en attente de version sombre) */}
+                {/* Logo NOIR — visible en mode sombre */}
                 <Image
-                  src="/site-icon.png"
+                  src="/site-icon-dark.png"
                   alt=""
                   aria-hidden="true"
                   fill
