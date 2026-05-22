@@ -1,160 +1,299 @@
 "use client"
 
 import { useState } from "react"
-import {
-  Box,
-  Cable,
-  Building2,
-  Home,
-  ChevronRight,
-  Network,
-} from "lucide-react"
+import { Network, Home, Layers, Cable, Box, Building2, ArrowRight } from "lucide-react"
 import { ScrollReveal } from "./scroll-reveal"
-import { useLanguage } from "@/lib/i18n/context"
 
-const NODES = [
+interface ArchNode {
+  id: string
+  code: string
+  label: string
+  sublabel: string
+  icon: React.ElementType
+  color: string
+  description: string
+  details: string[]
+}
+
+const NODES: ArchNode[] = [
   {
-    id: "PM",
+    id: "nra",
+    code: "NRA",
+    label: "Nœud de Raccordement Optique",
+    sublabel: "Point de départ",
+    icon: Network,
+    color: "#C8A84B",
+    description: "Cœur du réseau FTTH, le NRA héberge les équipements actifs OLT qui génèrent et gèrent le signal optique distribué vers l'ensemble des abonnés.",
+    details: [
+      "Équipements OLT (Optical Line Terminal)",
+      "Concentration de tous les câbles primaires",
+      "Supervision centralisée du réseau",
+      "Capacité : jusqu'à 100 000 lignes",
+    ],
+  },
+  {
+    id: "pm",
+    code: "PM",
+    label: "Point de Mutualisation",
+    sublabel: "Armoire de rue",
     icon: Box,
-    titleFr: "PM",
-    subtitleFr: "Armoire de rue",
-    descFr:
-      "Point de mutualisation en voirie. Concentration des fibres de distribution vers les abonnés du secteur.",
+    color: "#1E6B6B",
+    description: "Armoire de rue ou chambre souterraine permettant la mutualisation entre opérateurs. Interface entre le réseau primaire et la distribution secondaire.",
+    details: [
+      "Accès ouvert à tout opérateur (mutualisation)",
+      "Protection étanche IP55 minimum",
+      "Connectique SC/APC standard",
+      "Capacité : 24 à 576 fibres",
+    ],
   },
   {
-    id: "D1",
+    id: "d1",
+    code: "D1",
+    label: "Distribution Primaire",
+    sublabel: "Backbone réseau",
     icon: Cable,
-    titleFr: "D1",
-    subtitleFr: "Backbone réseau",
-    descFr:
-      "Tronçon principal du réseau de distribution. Assure le transport de capacité entre les zones de regroupement.",
+    color: "#2C5F8A",
+    description: "Câble optique de forte capacité reliant les zones de regroupement au PM. Constitue l'épine dorsale du réseau FTTH et supporte l'ensemble du trafic agrégé.",
+    details: [
+      "72 à 288 fibres optiques",
+      "Pose aérienne ou souterraine",
+      "Câble G.652.D certifié",
+      "Distance : jusqu'à 20 km",
+    ],
   },
   {
-    id: "D2",
+    id: "d2",
+    code: "D2",
+    label: "Distribution Secondaire",
+    sublabel: "Ramification locale",
     icon: Cable,
-    titleFr: "D2",
-    subtitleFr: "Ramification locale",
-    descFr:
-      "Branche locale qui alimente les quartiers et immeubles. Raccordement des points de distribution secondaires.",
+    color: "#3A7CB5",
+    description: "Segment intermédiaire reliant le PM aux zones de distribution tertiaire. Assure la capillarité du réseau vers les quartiers et îlots desservis.",
+    details: [
+      "24 à 72 fibres optiques",
+      "Dessert plusieurs quartiers et îlots",
+      "Optimisé pour zones denses",
+      "Distance : 500 m à 2 km",
+    ],
   },
   {
-    id: "CM",
+    id: "d3",
+    code: "D3",
+    label: "Distribution Tertiaire",
+    sublabel: "Dernier kilomètre",
+    icon: Cable,
+    color: "#1A4A7A",
+    description: "Dernier maillon de la distribution passive, raccordant les câbles secondaires directement aux boîtiers limite (PBO) de chaque immeuble ou groupement.",
+    details: [
+      "6 à 24 fibres optiques",
+      "Câble micro-module ou mono-tube",
+      "Pose sur façade ou souterraine",
+      "Distance : 50 à 500 m",
+    ],
+  },
+  {
+    id: "bl",
+    code: "BL",
+    label: "Boîtier Limite / PBO",
+    sublabel: "Point de branchement",
+    icon: Box,
+    color: "#1A3D5C",
+    description: "Point de Branchement Optique : interface passive entre le réseau de distribution et le réseau d'abonnés. Chaque abonné dispose d'une fibre dédiée depuis ce point.",
+    details: [
+      "Connectique SC/APC individuelle",
+      "Mise en coupure par abonné",
+      "Installation en façade ou local",
+      "Étanchéité IP66",
+    ],
+  },
+  {
+    id: "cm",
+    code: "CM",
+    label: "Colonne Montante",
+    sublabel: "Distribution immeuble",
     icon: Building2,
-    titleFr: "CM",
-    subtitleFr: "Distribution immeuble",
-    descFr:
-      "Colonne montante et distribution verticale dans le bâtiment jusqu'aux logements ou locaux professionnels.",
+    color: "#102A3E",
+    description: "Infrastructure passive verticale à l'intérieur d'un immeuble, reliant la distribution jusqu'aux prises terminales optiques (PTO) de chaque étage et appartement.",
+    details: [
+      "Gaine technique dédiée fibre",
+      "1 fibre par logement",
+      "Manchons de protection par palier",
+      "Conforme NF C 15-900",
+    ],
   },
   {
-    id: "PTO",
+    id: "home",
+    code: "PTO",
+    label: "Logement — L'Abonné",
+    sublabel: "Prise terminale",
     icon: Home,
-    titleFr: "PTO",
-    subtitleFr: "Prise terminale",
-    descFr:
-      "Prise optique chez l'abonné. Point final de la fibre, connecté au modem (ONT) pour la mise en service.",
+    color: "#C8A84B",
+    description: "La prise terminale optique (PTO) installée dans le logement constitue le point de terminaison du réseau passif. L'ONT de l'opérateur s'y connecte pour fournir Internet.",
+    details: [
+      "PTO murale encastrée",
+      "ONT (Optical Network Terminal)",
+      "Débit jusqu'à 10 Gbps",
+      "Triple play : Internet, TV, Téléphone",
+    ],
   },
-] as const
+]
+
+const EXCLUDED_NODE_IDS = new Set(["nra", "d3", "bl"])
+const VISIBLE_NODES = NODES.filter((n) => !EXCLUDED_NODE_IDS.has(n.id))
 
 export function FtthArchitectureSection() {
-  const { locale } = useLanguage()
-  const [activeId, setActiveId] = useState<string>(NODES[0].id)
+  const [activeId, setActiveId] = useState<string | null>(null)
 
-  const text = {
-    fr: {
-      badge: "Infrastructure FTTH",
-      title: "Architecture réseau FTTH",
-      subtitle:
-        "De l'armoire de rue jusqu'à l'abonné — infrastructure passive et active de bout en bout. Cliquez sur chaque nœud pour découvrir son rôle.",
-      hint: "Sélectionnez un nœud pour afficher ses détails",
-    },
-    en: {
-      badge: "FTTH Infrastructure",
-      title: "FTTH Network Architecture",
-      subtitle:
-        "From the street cabinet to the subscriber — end-to-end passive and active infrastructure. Click each node to learn its role.",
-      hint: "Select a node to view details",
-    },
-  } as const
-
-  const tr = text[locale as keyof typeof text] || text.fr
-  const active = NODES.find((n) => n.id === activeId) ?? NODES[0]
+  const active = VISIBLE_NODES.find((n) => n.id === activeId) ?? null
 
   return (
-    <section id="architecture-ftth" className="section-padding bg-background relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+    <section className="section-padding bg-muted/30 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-primary/5 blur-3xl translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-primary/5 blur-3xl -translate-x-1/2 translate-y-1/2" />
+      </div>
 
       <div className="container-wide relative z-10">
-        <ScrollReveal>
-          <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-xs font-bold text-primary mb-8 tracking-widest uppercase">
-            <Network className="w-4 h-4" />
-            <span>{tr.badge}</span>
-          </div>
-        </ScrollReveal>
+        {/* Header */}
+        <div className="max-w-3xl mb-16">
+          <ScrollReveal>
+            <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-xs font-bold text-primary mb-6 tracking-widest uppercase">
+              <Layers className="w-4 h-4" />
+              <span>Infrastructure FTTH</span>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={1}>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 text-balance leading-tight">
+              Architecture{" "}
+              <span className="text-primary">Réseau FTTH</span>
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal delay={2}>
+            <p className="text-muted-foreground text-lg md:text-xl leading-relaxed text-pretty max-w-2xl">
+              De l&apos;armoire de rue jusqu&apos;à l&apos;abonné — infrastructure passive et active de bout en bout.{" "}
+              <span className="text-foreground/70">Cliquez sur chaque nœud pour découvrir son rôle.</span>
+            </p>
+          </ScrollReveal>
+        </div>
 
-        <ScrollReveal delay={1}>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">
-            {tr.title}
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl mb-12">
-            {tr.subtitle}
-          </p>
-        </ScrollReveal>
-
+        {/* Architecture chain — scrollable */}
         <ScrollReveal delay={2}>
-          <div className="overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0">
-            <div className="flex items-center gap-2 min-w-max md:min-w-0 md:justify-center">
-              {NODES.map((node, index) => {
-                const Icon = node.icon
-                const isActive = node.id === activeId
-                return (
-                  <div key={node.id} className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setActiveId(node.id)}
-                      className={`flex flex-col items-center gap-3 p-5 rounded-2xl border min-w-[120px] transition-all duration-300 ${
-                        isActive
-                          ? "border-primary bg-primary/10 shadow-lg shadow-primary/10 scale-[1.02]"
-                          : "border-border bg-card hover:border-primary/40 hover:bg-muted/30"
-                      }`}
-                    >
-                      <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                          isActive ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"
-                        }`}
+          <div className="relative">
+            {/* Scroll hint fade edges */}
+            <div className="pointer-events-none absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-background/60 to-transparent z-10 rounded-l-2xl" aria-hidden />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-background/60 to-transparent z-10 rounded-r-2xl" aria-hidden />
+
+            <div
+              className="overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-primary/30 scrollbar-track-transparent"
+              style={{ scrollbarWidth: "thin" }}
+            >
+              <div className="flex items-center gap-0 w-max mx-auto px-4">
+                {VISIBLE_NODES.map((node, idx) => {
+                  const Icon = node.icon
+                  const isActive = activeId === node.id
+                  const isLast = idx === VISIBLE_NODES.length - 1
+
+                  return (
+                    <div key={node.id} className="flex items-center">
+                      {/* Card button */}
+                      <button
+                        onClick={() => setActiveId(isActive ? null : node.id)}
+                        className={`
+                          group relative flex flex-col items-center gap-3 px-5 py-6 rounded-2xl border-2 transition-all duration-300 cursor-pointer text-center w-[130px]
+                          ${isActive
+                            ? "border-primary bg-primary text-white shadow-2xl shadow-primary/40 -translate-y-2"
+                            : "border-border glass hover:border-primary/60 hover:-translate-y-1 hover:shadow-xl"
+                          }
+                        `}
+                        aria-expanded={isActive}
+                        aria-controls={`detail-${node.id}`}
                       >
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <div className="text-center">
-                        <p className="font-display font-bold text-foreground">{node.titleFr}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5">{node.subtitleFr}</p>
-                      </div>
-                    </button>
-                    {index < NODES.length - 1 && (
-                      <ChevronRight className="w-5 h-5 text-muted-foreground/50 shrink-0 hidden sm:block" />
-                    )}
-                  </div>
-                )
-              })}
+                        {/* Icon */}
+                        <div
+                          className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                            isActive ? "bg-white/20" : "bg-primary/10"
+                          }`}
+                          style={isActive ? {} : { borderTop: `3px solid ${node.color}` }}
+                        >
+                          <Icon className={`w-7 h-7 ${isActive ? "text-white" : "text-primary"}`} />
+                        </div>
+
+                        {/* Code */}
+                        <span className={`font-display text-2xl font-black leading-none ${isActive ? "text-white" : "text-foreground"}`}>
+                          {node.code}
+                        </span>
+
+                        {/* Label */}
+                        <span className={`text-[11px] font-medium leading-tight ${isActive ? "text-white/90" : "text-muted-foreground"}`}>
+                          {node.sublabel}
+                        </span>
+                      </button>
+
+                      {/* Arrow between nodes */}
+                      {!isLast && (
+                        <div className="flex items-center px-1 text-muted-foreground/40 flex-shrink-0">
+                          <ArrowRight className="w-5 h-5" />
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={3}>
-          <div className="mt-8 p-6 md:p-8 rounded-2xl border border-border bg-card">
-            <p className="text-xs text-muted-foreground mb-4 uppercase tracking-widest">{tr.hint}</p>
-            <div className="flex flex-col sm:flex-row gap-6 items-start">
-              <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center shrink-0">
-                <active.icon className="w-7 h-7 text-primary-foreground" />
+        {/* Detail panel */}
+        <div
+          id={`detail-${activeId}`}
+          className={`mt-8 transition-all duration-500 overflow-hidden ${
+            active ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+          }`}
+          aria-live="polite"
+        >
+          {active && (
+            <div className="glass rounded-3xl border border-border p-8 md:p-10 flex flex-col md:flex-row gap-8">
+              {/* Left: code + title */}
+              <div className="flex-shrink-0 flex flex-col items-start gap-4 md:w-56">
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                  style={{ background: `${active.color}20`, borderTop: `4px solid ${active.color}` }}
+                >
+                  <active.icon className="w-8 h-8" style={{ color: active.color }} />
+                </div>
+                <div>
+                  <p className="font-display text-4xl font-black text-primary leading-none">{active.code}</p>
+                  <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest mt-1">{active.sublabel}</p>
+                </div>
+                <p className="text-sm font-semibold text-foreground leading-snug">{active.label}</p>
               </div>
-              <div>
-                <h3 className="font-display text-2xl font-bold text-foreground mb-1">
-                  {active.titleFr} — {active.subtitleFr}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed mt-3">{active.descFr}</p>
+
+              {/* Divider */}
+              <div className="hidden md:block w-px bg-border" />
+
+              {/* Right: description + details */}
+              <div className="flex-1 flex flex-col gap-6">
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed">{active.description}</p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {active.details.map((detail) => (
+                    <li key={detail} className="flex items-start gap-3">
+                      <span className="mt-1.5 w-2 h-2 rounded-full bg-primary flex-shrink-0" />
+                      <span className="text-sm text-foreground/80 leading-snug">{detail}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-          </div>
-        </ScrollReveal>
+          )}
+        </div>
+
+        {/* Hint when nothing selected */}
+        {!active && (
+          <p className="text-center text-xs text-muted-foreground/50 mt-6 tracking-wide">
+            ↑ Sélectionnez un nœud pour afficher ses détails
+          </p>
+        )}
       </div>
     </section>
   )
