@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useLanguage, languages, Locale } from "@/lib/i18n/context"
 import { ChevronDown, Check } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 // Flag images using country-flags CDN
 const flagUrls: Record<Locale, string> = {
@@ -23,7 +24,11 @@ const flagUrls: Record<Locale, string> = {
   zh: "https://flagcdn.com/w40/cn.png",
 }
 
-export function LanguageSwitcher() {
+type LanguageSwitcherProps = {
+  onDarkBackground?: boolean
+}
+
+export function LanguageSwitcher({ onDarkBackground = false }: LanguageSwitcherProps) {
   const { locale, setLocale, currentLanguage } = useLanguage()
 
   return (
@@ -32,7 +37,12 @@ export function LanguageSwitcher() {
         <Button 
           variant="ghost" 
           size="sm" 
-          className="gap-2 px-2.5 h-9 text-foreground/70 hover:text-foreground hover:bg-slate-100 dark:hover:bg-slate-100 border border-slate-200 dark:border-slate-300/20 hover:border-slate-300 transition-colors"
+          className={cn(
+            "gap-2 px-2.5 h-9 transition-colors",
+            onDarkBackground
+              ? "text-white/80 hover:text-white hover:bg-white/10 border border-white/25 hover:border-white/40"
+              : "text-foreground/70 hover:text-foreground hover:bg-muted border border-border hover:border-border/80"
+          )}
         >
           <Image
             src={flagUrls[locale]}
