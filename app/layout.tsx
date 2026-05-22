@@ -45,9 +45,13 @@ export const metadata: Metadata = {
   publisher: 'GUYA FIBRE',
   manifest: '/manifest.json',
   icons: {
-    icon: [{ url: '/icon', sizes: 'any' }],
-    apple: [{ url: '/apple-icon', sizes: '180x180' }],
-    shortcut: ['/icon'],
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/images/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/favicon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
+    shortcut: '/favicon.ico',
   },
   appleWebApp: {
     capable: true,
@@ -126,8 +130,6 @@ export default function RootLayout({
     <html lang="fr" className={`${spaceGrotesk.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/icon" type="image/png" />
-        <link rel="apple-touch-icon" href="/apple-icon" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
