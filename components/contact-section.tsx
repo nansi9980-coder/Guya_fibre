@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Phone, Mail, MapPin, Send, CheckCircle, MessageSquare } from "lucide-react"
+import { Phone, Mail, Send, CheckCircle, MessageSquare } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
 import { PhoneInput } from "@/components/ui/phone-input"
 import { ScrollReveal } from "./scroll-reveal"
@@ -116,18 +116,6 @@ export function ContactSection() {
                 </a>
               </ScrollReveal>
 
-              <ScrollReveal delay={4}>
-                <div className="flex items-center gap-6 p-8 glass rounded-3xl border border-border group shadow-sm">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-muted-foreground mb-1 uppercase tracking-widest">{t("contact.address")}</div>
-                    <div className="text-xl font-bold text-foreground">{company.city}</div>
-                    <div className="text-sm text-muted-foreground">Guyane française</div>
-                  </div>
-                </div>
-              </ScrollReveal>
             </div>
           </div>
 

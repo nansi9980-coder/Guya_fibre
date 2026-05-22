@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Phone, Mail, MapPin, ExternalLink } from "lucide-react"
+import { Phone, Mail, MapPin } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
@@ -47,8 +47,6 @@ export function Footer() {
       .catch(() => {})
   }, [])
 
-  const brandLine1 = t("footer.brandLine1")
-  const brandLine2 = t("footer.brandLine2")
   const locationCity = company.city || t("footer.locationCity")
   const locationCountry = t("footer.locationCountry")
   const phoneRegion = t("footer.phoneRegion")
@@ -206,80 +204,8 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Animated Logo Banner */}
-        <div className="mt-12 pt-8 border-t border-border">
-          <div className="relative overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-r from-muted via-card to-muted p-6">
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute -inset-[100%] animate-[spin_8s_linear_infinite] bg-gradient-conic from-primary/20 via-transparent to-primary/20" />
-            </div>
-            <div className="absolute inset-[1px] rounded-xl bg-card" />
-
-            <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-6">
-                <div className="relative">
-                  <div className="absolute -inset-2 bg-primary/20 rounded-xl blur-xl animate-pulse" />
-                  {company.logo ? (
-                    <Image
-                      src={logoSrc}
-                      alt={company.name}
-                      width={180}
-                      height={64}
-                      className="relative h-14 w-auto object-contain"
-                    />
-                  ) : (
-                    <div className="relative h-14 w-44">
-                      {/* Logo pour mode clair - icône dans public/images/site-icon-dark.png */}
-                      <Image
-                        src="/images/site-icon-dark.png"
-                        alt={company.name}
-                        fill
-                        className="object-contain object-left block dark:hidden"
-                      />
-                      {/* Logo pour mode sombre - icône dans public/images/site-icon.png */}
-                      <Image
-                        src="/images/site-icon.png"
-                        alt=""
-                        aria-hidden="true"
-                        fill
-                        className="object-contain object-left hidden dark:block"
-                      />
-                    </div>
-                  )}
-                </div>
-                <div className="hidden md:block h-12 w-px bg-gradient-to-b from-transparent via-primary/40 to-transparent" />
-                <div className="text-center md:text-left">
-                  <p className="text-lg font-display font-bold text-foreground">
-                    {brandLine1}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {brandLine2}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <a
-                  href={`tel:${company.phone.replace(/\s/g, '')}`}
-                  className="flex items-center gap-3 px-5 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-all hover:scale-105 active:scale-95"
-                >
-                  <Phone className="w-4 h-4" />
-                  <span className="hidden sm:inline">{company.phone}</span>
-                  <span className="sm:hidden">{t("common.callUs")}</span>
-                </a>
-                <Link
-                  href="/devis"
-                  className="flex items-center gap-2 px-5 py-3 rounded-lg border border-primary text-primary font-semibold text-sm hover:bg-primary/10 transition-all"
-                >
-                  {t("nav.quote")}
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Bottom bar */}
-        <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="hidden md:block h-px flex-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
           <p className="text-sm text-muted-foreground text-center md:mx-8">
             &copy; {new Date().getFullYear()} {company.name}. {t("footer.rights")}.

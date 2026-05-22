@@ -10,7 +10,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { PhoneInput } from "@/components/ui/phone-input"
 import { 
-  MapPin, 
   Phone, 
   Mail, 
   Clock, 
@@ -21,17 +20,12 @@ import {
   Car,
   Plane
 } from "lucide-react"
+import { ClickableMapLink } from "@/components/clickable-map-link"
 import { toast } from "sonner"
 import { contactApi, CreateContactRequest } from "@/lib/api/contact.api"
 import { useLanguage } from "@/lib/i18n/context"
 
 const contactInfo = [
-  {
-    icon: MapPin,
-    titleKey: "contact.address",
-    content: "12 Rue des Palmiers",
-    subcontent: "97320 Saint-Laurent-du-Maroni, Guyane française",
-  },
   {
     icon: Phone,
     titleKey: "contact.phone",
@@ -75,11 +69,6 @@ const directions = [
 
 export default function ContactPage() {
   const { t } = useLanguage()
-  const COMPANY_LOCATION = {
-    lat: 5.5026,
-    lng: -54.0333,
-    label: "GUYA FIBRE",
-  }
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -145,7 +134,7 @@ export default function ContactPage() {
         {/* Contact Info Cards */}
         <section className="pb-12 px-4 md:px-8">
           <div className="container-wide">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid md:grid-cols-3 gap-4">
               {contactInfo.map((info, index) => (
                 <Card key={index} className="bg-white dark:bg-slate-800 border-gray-200 dark:border-gray-700">
                   <CardContent className="p-6">
@@ -170,25 +159,7 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <Card className="bg-white dark:bg-slate-800 border-gray-200 dark:border-gray-700 overflow-hidden">
                   <CardContent className="p-0">
-                    <div className="aspect-[4/3] relative">
-                      <iframe
-                        src={`https://www.google.com/maps?q=${COMPANY_LOCATION.lat},${COMPANY_LOCATION.lng}&z=18&hl=fr&output=embed`}
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        className="absolute inset-0"
-                      />
-                      <div className="absolute top-4 left-4 z-10 rounded-full bg-background/90 backdrop-blur-sm border border-border px-3 py-1.5 shadow-md flex items-center gap-2">
-                        <span className="relative flex h-3 w-3">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-primary" />
-                        </span>
-                        <span className="text-xs font-semibold text-foreground">{COMPANY_LOCATION.label}</span>
-                      </div>
-                    </div>
+                    <ClickableMapLink aspectClass="aspect-[4/3]" className="rounded-none border-0" />
                   </CardContent>
                 </Card>
 
@@ -216,19 +187,6 @@ export default function ContactPage() {
                         </div>
                       ))}
                     </div>
-                    <Button 
-                      asChild
-                      className="w-full mt-6 bg-[oklch(0.65_0.13_180)] hover:bg-[oklch(0.55_0.13_180)] text-white"
-                    >
-                      <a 
-                        href="https://www.google.com/maps/dir/?api=1&destination=5.5026,-54.0333" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      >
-                        <Navigation className="w-4 h-4 mr-2" />
-                        {t("contact.openInGoogleMaps")}
-                      </a>
-                    </Button>
                   </CardContent>
                 </Card>
               </div>

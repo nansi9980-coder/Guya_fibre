@@ -6,6 +6,7 @@ import { StatsSection } from "@/components/stats-section"
 import { ServicesSection } from "@/components/services-section"
 import { ProcessSection } from "@/components/process-section"
 import { AboutSection } from "@/components/about-section"
+import { FtthArchitectureSection } from "@/components/ftth-architecture-section"
 import { RealisationsSection } from "@/components/realisations-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { FAQSection } from "@/components/faq-section"
@@ -22,6 +23,7 @@ export default function HomePage() {
         <ServicesSection />
         <ProcessSection />
         <AboutSection />
+        <FtthArchitectureSection />
         <RealisationsSection />
         <TestimonialsSection />
         <CTABanner />
