@@ -29,7 +29,11 @@ export const metadata: Metadata = {
   },
   description:
     'Entreprise de référence en Guyane française, GUYA FIBRE conçoit, déploie et maintient des réseaux fibre optique FTTH/FTTO à haute performance. De Cayenne aux zones les plus isolées, nos équipes assurent une connectivité durable pour particuliers, entreprises et collectivités.',
+  applicationName: 'GUYA FIBRE',
   keywords: [
+    'GUYA FIBRE',
+    'Guya fibre',
+    'Guya Fibre',
     'fibre optique Guyane',
     'FTTH Guyane',
     'FTTO Guyane',
@@ -49,6 +53,7 @@ export const metadata: Metadata = {
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/images/favicon-32.png', sizes: '32x32', type: 'image/png' },
       { url: '/images/favicon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/images/favicon-512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
     shortcut: '/favicon.ico',
@@ -133,36 +138,84 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'LocalBusiness',
-              name: 'GUYA FIBRE',
-              description:
-                'Entreprise guyanaise experte en ingénierie et déploiement fibre optique, GUYA FIBRE accompagne durablement les particuliers, entreprises et collectivités, de Cayenne aux zones isolées de l\u2019intérieur.',
-              url: siteUrl,
-              telephone: '+594 694435484',
-              email: 'contact@guyafibre.com',
-              address: {
-                '@type': 'PostalAddress',
-                streetAddress: '12 Rue des Palmiers',
-                addressLocality: 'Saint-Laurent-du-Maroni',
-                postalCode: '97320',
-                addressCountry: 'GF',
-                addressRegion: 'Guyane française',
+            __html: JSON.stringify([
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Organization',
+                '@id': `${siteUrl}/#organization`,
+                name: 'GUYA FIBRE',
+                alternateName: ['Guya fibre', 'Guya Fibre', 'GUYA fibre'],
+                url: siteUrl,
+                logo: {
+                  '@type': 'ImageObject',
+                  url: `${siteUrl}/images/favicon-512.png`,
+                  width: 512,
+                  height: 512,
+                },
+                image: `${siteUrl}/images/favicon-512.png`,
+                email: 'contact@guyafibre.com',
+                telephone: '+594-694-43-54-84',
+                address: {
+                  '@type': 'PostalAddress',
+                  streetAddress: '12 Rue des Palmiers',
+                  addressLocality: 'Saint-Laurent-du-Maroni',
+                  postalCode: '97320',
+                  addressCountry: 'GF',
+                },
+                areaServed: {
+                  '@type': 'AdministrativeArea',
+                  name: 'Guyane française',
+                },
               },
-              geo: {
-                '@type': 'GeoCoordinates',
-                latitude: 5.5026,
-                longitude: -54.0333,
+              {
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                '@id': `${siteUrl}/#website`,
+                name: 'GUYA FIBRE',
+                alternateName: ['Guya fibre'],
+                url: siteUrl,
+                publisher: { '@id': `${siteUrl}/#organization` },
+                inLanguage: 'fr-FR',
+                potentialAction: {
+                  '@type': 'SearchAction',
+                  target: {
+                    '@type': 'EntryPoint',
+                    urlTemplate: `${siteUrl}/?q={search_term_string}`,
+                  },
+                  'query-input': 'required name=search_term_string',
+                },
               },
-              openingHours: 'Mo-Fr 08:00-18:00, Sa 08:00-12:00',
-              areaServed: 'Guyane française',
-              sameAs: ['https://wa.me/594694435484'],
-              // Images pour les données structurées - modifier les chemins ici si nécessaire
-              image: `${siteUrl}/images/logo.jpg`,
-              logo: `${siteUrl}/images/logo.jpg`,
-              priceRange: '$$',
-            }),
+              {
+                '@context': 'https://schema.org',
+                '@type': 'LocalBusiness',
+                '@id': `${siteUrl}/#localbusiness`,
+                name: 'GUYA FIBRE',
+                alternateName: ['Guya fibre'],
+                description:
+                  'Entreprise guyanaise experte en ingénierie et déploiement fibre optique en Guyane française (FTTH / FTTO).',
+                url: siteUrl,
+                image: `${siteUrl}/images/favicon-512.png`,
+                logo: `${siteUrl}/images/favicon-512.png`,
+                telephone: '+594-694-43-54-84',
+                email: 'contact@guyafibre.com',
+                address: {
+                  '@type': 'PostalAddress',
+                  streetAddress: '12 Rue des Palmiers',
+                  addressLocality: 'Saint-Laurent-du-Maroni',
+                  postalCode: '97320',
+                  addressCountry: 'GF',
+                  addressRegion: 'Guyane française',
+                },
+                geo: {
+                  '@type': 'GeoCoordinates',
+                  latitude: 5.5026,
+                  longitude: -54.0333,
+                },
+                openingHours: 'Mo-Fr 08:00-18:00, Sa 08:00-12:00',
+                areaServed: 'Guyane française',
+                priceRange: '$$',
+              },
+            ]),
           }}
         />
       </head>

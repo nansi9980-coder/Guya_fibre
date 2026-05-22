@@ -4,7 +4,7 @@
   "description": "Déploiement et maintenance de réseaux fibre optique en Guyane française",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
+  "background_color": "#0a1220",
   "theme_color": "#0ea5e9",
   "scope": "/",
   "orientation": "portrait-primary",
@@ -16,21 +16,21 @@
       "purpose": "any"
     },
     {
-      "src": "/images/favicon-192.png",
-      "sizes": "192x192",
+      "src": "/images/favicon-maskable-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "/images/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/apple-icon",
       "sizes": "180x180",
       "type": "image/png"
-    },
-    {
-      "src": "/images/logo.jpg",
-      "sizes": "any",
-      "type": "image/jpeg",
-      "purpose": "any"
     }
   ],
   "screenshots": [
@@ -55,39 +55,21 @@
       "short_name": "Contact",
       "description": "Envoyer une demande de prise de contact",
       "url": "/contact",
-      "icons": [
-        {
-          "src": "/images/favicon-192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
+      "icons": [{ "src": "/images/favicon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
-      "name": "Nos services",
-      "short_name": "Services",
-      "description": "Découvrir nos services de fibre optique",
-      "url": "/services",
-      "icons": [
-        {
-          "src": "/images/favicon-192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
+      "name": "Études & Ingénierie",
+      "short_name": "Études",
+      "description": "Services d'études fibre optique",
+      "url": "/services#etudes",
+      "icons": [{ "src": "/images/favicon-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "À propos",
       "short_name": "À propos",
       "description": "En savoir plus sur GUYA FIBRE",
       "url": "/apropos",
-      "icons": [
-        {
-          "src": "/images/favicon-192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
+      "icons": [{ "src": "/images/favicon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }
