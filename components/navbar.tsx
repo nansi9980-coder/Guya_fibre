@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LanguageSwitcher } from '@/components/language-switcher'
@@ -13,7 +13,6 @@ import { useLanguage } from '@/lib/i18n/context'
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [servicesOpen, setServicesOpen] = useState(false)
   const pathname = usePathname()
   const { t } = useLanguage()
   const isHome = pathname === '/'
@@ -21,19 +20,8 @@ export function Navbar() {
   const navLinks = [
     { href: '/', label: t('nav.home') },
     { href: '/apropos', label: t('nav.about') },
-    {
-      href: '/services',
-      label: t('nav.services'),
-      children: [
-        { href: '/services#etudes', label: t('services.studies') },
-        { href: '/services#deploiement', label: t('services.deployment') },
-        { href: '/services#raccordement', label: t('services.connection') },
-        { href: '/services#maintenance', label: t('services.maintenance') },
-        { href: '/services#entreprises', label: t('services.enterprise') },
-      ],
-    },
+    { href: '/services#etudes', label: t('services.studies') },
     { href: '/offres', label: t('nav.offers') },
-    { href: '/projets', label: t('nav.projects') },
     { href: '/contact', label: t('nav.contact') },
   ]
 
@@ -103,45 +91,20 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) =>
-            link.children ? (
-              <div key={link.href} className="relative group">
-                <button
-                  className={cn(
-                    'flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                    forceWhiteLogo ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
-                  )}
-                >
-                  {link.label}
-                  <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
-                </button>
-                <div className="absolute left-0 top-full hidden group-hover:block bg-card border border-border rounded-lg shadow-lg min-w-48 overflow-hidden">
-                  {link.children.map((child) => (
-                    <Link
-                      key={child.href}
-                      href={child.href}
-                      className="block px-4 py-2.5 text-sm text-foreground hover:bg-muted hover:text-primary transition-colors"
-                    >
-                      {child.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                  pathname === link.href
-                    ? forceWhiteLogo ? 'text-white font-semibold underline underline-offset-4' : 'text-primary font-semibold'
-                    : forceWhiteLogo ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
-                )}
-              >
-                {link.label}
-              </Link>
-            )
-          )}
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                pathname === link.href || (link.href.includes('#') && pathname === link.href.split('#')[0])
+                  ? forceWhiteLogo ? 'text-white font-semibold underline underline-offset-4' : 'text-primary font-semibold'
+                  : forceWhiteLogo ? 'text-white hover:text-white/80' : 'text-foreground hover:text-primary'
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         {/* Desktop CTA */}
@@ -178,43 +141,18 @@ export function Navbar() {
       {mobileOpen && (
         <div className="lg:hidden bg-white/95 dark:bg-black/95 border-t border-slate-200/70 dark:border-black/70">
           <nav className="flex flex-col px-4 py-4 space-y-2">
-            {navLinks.map((link) =>
-              link.children ? (
-                <div key={link.href} className="space-y-2">
-                  <button
-                    onClick={() => setServicesOpen(!servicesOpen)}
-                    className="w-full text-left px-3 py-2 text-foreground font-medium hover:text-primary transition-colors flex items-center justify-between"
-                  >
-                    {link.label}
-                    <ChevronDown className={cn('h-4 w-4 transition-transform', servicesOpen && 'rotate-180')} />
-                  </button>
-                  {servicesOpen && (
-                    <div className="pl-4 space-y-1">
-                      {link.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="block px-3 py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                    pathname === link.href ? 'text-primary bg-primary/5' : 'text-foreground hover:text-primary hover:bg-muted'
-                  )}
-                >
-                  {link.label}
-                </Link>
-              )
-            )}
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                  pathname === link.href ? 'text-primary bg-primary/5' : 'text-foreground hover:text-primary hover:bg-muted'
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
             <div className="pt-2 border-t border-border flex items-center gap-3">
               <ThemeToggle />
               <LanguageSwitcher />

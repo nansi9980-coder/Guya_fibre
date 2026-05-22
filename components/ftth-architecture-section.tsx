@@ -17,13 +17,13 @@ interface ArchNode {
 
 const NODES: ArchNode[] = [
   {
-    id: "nra",
-    code: "NRA",
+    id: "nro",
+    code: "NRO",
     label: "Nœud de Raccordement Optique",
     sublabel: "Point de départ",
     icon: Network,
     color: "#C8A84B",
-    description: "Cœur du réseau FTTH, le NRA héberge les équipements actifs OLT qui génèrent et gèrent le signal optique distribué vers l'ensemble des abonnés.",
+    description: "Cœur du réseau FTTH, le NRO héberge les équipements actifs OLT qui génèrent et gèrent le signal optique distribué vers l'ensemble des abonnés.",
     details: [
       "Équipements OLT (Optical Line Terminal)",
       "Concentration de tous les câbles primaires",
@@ -53,7 +53,7 @@ const NODES: ArchNode[] = [
     sublabel: "Backbone réseau",
     icon: Cable,
     color: "#2C5F8A",
-    description: "Câble optique de forte capacité reliant les zones de regroupement au PM. Constitue l'épine dorsale du réseau FTTH et supporte l'ensemble du trafic agrégé.",
+    description: "Câble optique de forte capacité reliant le NRO au PM. Constitue l'épine dorsale du réseau FTTH et supporte l'ensemble du trafic agrégé.",
     details: [
       "72 à 288 fibres optiques",
       "Pose aérienne ou souterraine",
@@ -138,7 +138,7 @@ const NODES: ArchNode[] = [
   },
 ]
 
-const EXCLUDED_NODE_IDS = new Set(["nra", "d3", "bl"])
+const EXCLUDED_NODE_IDS = new Set(["d3", "bl"])
 const VISIBLE_NODES = NODES.filter((n) => !EXCLUDED_NODE_IDS.has(n.id))
 
 export function FtthArchitectureSection() {
@@ -171,7 +171,7 @@ export function FtthArchitectureSection() {
           </ScrollReveal>
           <ScrollReveal delay={2}>
             <p className="text-muted-foreground text-lg md:text-xl leading-relaxed text-pretty max-w-2xl">
-              De l&apos;armoire de rue jusqu&apos;à l&apos;abonné — infrastructure passive et active de bout en bout.{" "}
+              Du NRO jusqu&apos;à l&apos;abonné — infrastructure passive et active de bout en bout.{" "}
               <span className="text-foreground/70">Cliquez sur chaque nœud pour découvrir son rôle.</span>
             </p>
           </ScrollReveal>
