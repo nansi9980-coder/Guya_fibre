@@ -1,11 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { MapPin, ArrowRight, Camera } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
-import { resolveMediaUrl } from "@/lib/utils/media"
+import { CmsImage } from "@/components/cms-image"
 import { ScrollReveal } from "./scroll-reveal"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guya-fibre-backend.onrender.com'
@@ -93,14 +92,14 @@ export function RealisationsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, i) => {
             const title = (locale === 'en' && project.titleEn) ? project.titleEn : project.titleFr
-            const imgSrc = resolveMediaUrl(project.images?.[0], "/images/project-cayenne.jpg")
             return (
               <ScrollReveal key={project.id} delay={((i % 3) + 1) as 1 | 2 | 3 | 4}>
                 <article className="group h-full flex flex-col glass rounded-[2.5rem] overflow-hidden border border-border hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/5">
                   {/* Image Container */}
                   <div className="relative h-72 overflow-hidden">
-                    <Image
-                      src={imgSrc}
+                    <CmsImage
+                      src={project.images?.[0]}
+                      fallback="/images/project-cayenne.jpg"
                       alt={title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"

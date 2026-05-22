@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
+import { CmsImage } from "@/components/cms-image"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -225,8 +225,9 @@ export default function ProjetsPage() {
                   className="group bg-card rounded-2xl border border-border overflow-hidden hover:shadow-xl hover:shadow-black/10 hover:-translate-y-1 transition-all duration-300"
                 >
                   <div className="relative h-56 overflow-hidden">
-                    <Image
-                      src={project.images?.[0] || "/images/project-default.jpg"}
+                    <CmsImage
+                      src={project.images?.[0]}
+                      fallback="/images/project-cayenne.jpg"
                       alt={localizedProjectValue(project, "title")}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"

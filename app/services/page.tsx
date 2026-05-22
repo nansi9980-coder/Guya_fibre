@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
+import { CmsImage } from "@/components/cms-image"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -287,8 +287,9 @@ export default function ServicesPage() {
                   </div>
 
                   <div className={`relative rounded-2xl overflow-hidden h-72 lg:h-96 ${isEven ? "lg:order-1" : ""}`}>
-                    <Image
-                      src={service.image || "/images/service-default.jpg"}
+                    <CmsImage
+                      src={service.image}
+                      fallback="/images/service-etudes.jpg"
                       alt={localizedField(service, "title")}
                       fill
                       className="object-cover"
