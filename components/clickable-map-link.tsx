@@ -1,6 +1,6 @@
 "use client"
 
-import { MapPin, ExternalLink } from "lucide-react"
+import { MapPin } from "lucide-react"
 import { useCompanySettings } from "@/lib/hooks/use-company-settings"
 import { buildGoogleMapsEmbedUrl } from "@/lib/utils/google-maps"
 import { cn } from "@/lib/utils"
@@ -61,10 +61,6 @@ export function ClickableMapLink({
         {formattedAddress && (
           <p className="max-w-sm text-xs text-white/90 drop-shadow">{formattedAddress}</p>
         )}
-        <span className="mt-1 inline-flex items-center gap-2 rounded-full border border-white/35 bg-black/50 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors group-hover:bg-black/65">
-          Ouvrir dans Google Maps
-          <ExternalLink className="h-4 w-4" />
-        </span>
       </div>
 
       {showOverlay && (
