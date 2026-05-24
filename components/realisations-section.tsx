@@ -99,7 +99,7 @@ export function RealisationsSection() {
                   <div className="relative h-72 overflow-hidden">
                     <CmsImage
                       src={project.images?.[0]}
-                      fallback="/images/project-cayenne.jpg"
+                      fallback="/placeholder.svg"
                       alt={title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"

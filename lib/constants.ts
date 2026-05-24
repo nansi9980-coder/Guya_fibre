@@ -46,6 +46,10 @@ export const BRAND_COLORS = {
   dark_mid: 'oklch(0.18 0.025 250)',
 } as const
 
+/** Backend API — même instance que l'admin (Render en prod) */
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || 'https://guya-fibre-backend.onrender.com'
+
 // Links
 export const LINKS = {
   home: '/',

@@ -1,35 +1,27 @@
-/**
- * Résout une URL de média en URL absolue pointant vers le backend.
- * Les médias uploadés sont maintenant servés via /files/xxx.jpg
- */
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+import { API_BASE_URL } from "@/lib/constants"
 
+/**
+ * Résout une URL de média en URL absolue utilisable par le site vitrine.
+ * - Cloudinary / URLs absolues : retournées telles quelles
+ * - Chemins backend (/files, /api/medias) : préfixés avec l'API
+ * - Chemins locaux (/images/...) : conservés pour le dossier public Next.js
+ */
 export function resolveMediaUrl(src: string | null | undefined, fallback: string): string {
   const trimmed = typeof src === "string" ? src.trim() : ""
   if (!trimmed) return fallback
 
-  // Déjà une URL absolue (http/https)
   if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) return trimmed
-
-  // Protocol-relative
   if (trimmed.startsWith("//")) return `https:${trimmed}`
 
-  // URL relative commençant par /files — on préfixe avec l'URL du backend
-  if (trimmed.startsWith("/files")) {
-    return `${API_URL}${trimmed}`
+  const cleanPath = trimmed.startsWith("/") ? trimmed : `/${trimmed}`
+
+  if (cleanPath.startsWith("/files") || cleanPath.startsWith("/api/medias")) {
+    return `${API_BASE_URL}${cleanPath}`
   }
 
-  // Rétrocompatibilité : ancien chemin /api/medias
-  if (trimmed.startsWith("/api/medias") || trimmed.startsWith("api/medias")) {
-    const filename = trimmed.replace(/^\/?(api\/)?medias\/file\//, "")
-    return `${API_URL}/files/${filename}`
+  if (/\.(jpe?g|png|gif|webp|svg)$/i.test(trimmed) && !trimmed.startsWith("/")) {
+    return `${API_BASE_URL}/files/${trimmed}`
   }
 
-  // Nom de fichier seul (ex. uuid.jpg)
-  if (!trimmed.startsWith("/") && /\.(jpe?g|png|gif|webp|svg)$/i.test(trimmed)) {
-    return `${API_URL}/files/${trimmed}`
-  }
-
-  // Autre chemin relatif (fichiers locaux /images/...)
-  return trimmed.startsWith("/") ? trimmed : `/${trimmed}`
+  return cleanPath
 }

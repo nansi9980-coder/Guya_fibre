@@ -11,6 +11,7 @@ import { CheckCircle2, ArrowRight, Loader2 } from "lucide-react"
 import { Compass, HardHat, Home, Zap, Server, Settings } from "lucide-react"
 import * as Icons from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
+import { API_BASE_URL } from "@/lib/constants"
 
 const ICON_MAP: Record<string, any> = {
   Compass,
@@ -35,8 +36,7 @@ export default function ServicesPage() {
 
   const fetchServices = async () => {
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-      const response = await fetch(`${API_URL}/api/services-content`)
+      const response = await fetch(`${API_BASE_URL}/api/services-content?isActive=true`)
       if (response.ok) {
         const data = await response.json()
         setServices(data)
@@ -289,7 +289,7 @@ export default function ServicesPage() {
                   <div className={`relative rounded-2xl overflow-hidden h-72 lg:h-96 ${isEven ? "lg:order-1" : ""}`}>
                     <CmsImage
                       src={service.image}
-                      fallback="/images/service-etudes.jpg"
+                      fallback="/placeholder.svg"
                       alt={localizedField(service, "title")}
                       fill
                       className="object-cover"

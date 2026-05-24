@@ -227,7 +227,7 @@ export default function ProjetsPage() {
                   <div className="relative h-56 overflow-hidden">
                     <CmsImage
                       src={project.images?.[0]}
-                      fallback="/images/project-cayenne.jpg"
+                      fallback="/placeholder.svg"
                       alt={localizedProjectValue(project, "title")}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
