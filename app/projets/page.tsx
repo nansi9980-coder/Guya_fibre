@@ -9,6 +9,7 @@ import { WhatsAppButton } from "@/components/whatsapp-button"
 import { CTABanner } from "@/components/cta-banner"
 import { MapPin, Calendar, ArrowRight, Loader2 } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
+import { API_BASE_URL } from "@/lib/constants"
 
 export default function ProjetsPage() {
   const { locale, t } = useLanguage()
@@ -68,8 +69,7 @@ export default function ProjetsPage() {
 
   const fetchProjects = async () => {
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
-      const response = await fetch(`${API_URL}/api/realisations`)
+      const response = await fetch(`${API_BASE_URL}/api/realisations?isActive=true`)
       if (response.ok) {
         const data = await response.json()
         setProjects(data.data || data)

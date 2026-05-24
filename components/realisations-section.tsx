@@ -5,9 +5,8 @@ import Link from "next/link"
 import { MapPin, ArrowRight, Camera } from "lucide-react"
 import { useLanguage } from "@/lib/i18n/context"
 import { CmsImage } from "@/components/cms-image"
+import { API_BASE_URL } from "@/lib/constants"
 import { ScrollReveal } from "./scroll-reveal"
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://guya-fibre-backend.onrender.com'
 
 interface Realisation {
   id: string
@@ -24,9 +23,9 @@ interface Realisation {
 }
 
 const FALLBACK_PROJECTS: Realisation[] = [
-  { id: "1", slug: "ftth-cayenne", titleFr: "Déploiement FTTH — Expansion Cayenne Centre", location: "Cayenne", scope: "1 200 prises résidentielles", tags: ["FTTH", "Génie civil"], images: ["/images/project-cayenne.jpg"], isActive: true, isFeatured: true, order: 1 },
-  { id: "2", slug: "lycee-melkior", titleFr: "Infrastructure Éducation — Lycée Melkior-Garré", location: "Cayenne", scope: "Réseaux inter-bâtiments 1Gbps", tags: ["FTTO", "Éducation"], images: ["/images/project-lycee.jpg"], isActive: true, isFeatured: true, order: 2 },
-  { id: "3", slug: "communes-ouest", titleFr: "Aménagement Rural — Communes Ouest", location: "Saint-Laurent-du-Maroni", scope: "45 km fibre aérien", tags: ["Aérien", "Zone rurale"], images: ["/images/project-rural.jpg"], isActive: true, isFeatured: true, order: 3 },
+  { id: "1", slug: "ftth-cayenne", titleFr: "Déploiement FTTH — Expansion Cayenne Centre", location: "Cayenne", scope: "1 200 prises résidentielles", tags: ["FTTH", "Génie civil"], images: [], isActive: true, isFeatured: true, order: 1 },
+  { id: "2", slug: "lycee-melkior", titleFr: "Infrastructure Éducation — Lycée Melkior-Garré", location: "Cayenne", scope: "Réseaux inter-bâtiments 1Gbps", tags: ["FTTO", "Éducation"], images: [], isActive: true, isFeatured: true, order: 2 },
+  { id: "3", slug: "communes-ouest", titleFr: "Aménagement Rural — Communes Ouest", location: "Saint-Laurent-du-Maroni", scope: "45 km fibre aérien", tags: ["Aérien", "Zone rurale"], images: [], isActive: true, isFeatured: true, order: 3 },
 ]
 
 export function RealisationsSection() {
@@ -36,7 +35,7 @@ export function RealisationsSection() {
 
   useEffect(() => {
     setLoading(true)
-    fetch(`${API_URL}/api/realisations?isActive=true&limit=6`)
+    fetch(`${API_BASE_URL}/api/realisations?isActive=true&limit=6`)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         const list = Array.isArray(data) ? data : data?.data
@@ -133,7 +132,7 @@ export function RealisationsSection() {
                     </p>
 
                     <Link 
-                      href={`/projets/${project.slug}`}
+                      href="/projets"
                       className="inline-flex items-center gap-2 text-xs font-bold text-foreground hover:text-primary transition-colors group/link"
                     >
                       Détails du projet

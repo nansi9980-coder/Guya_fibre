@@ -1,41 +1,46 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Image, { type ImageProps } from "next/image"
+import { cn } from "@/lib/utils"
 import { resolveMediaUrl } from "@/lib/utils/media"
 
-type CmsImageProps = Omit<ImageProps, "src"> & {
+type CmsImageProps = {
   src?: string | null
   fallback?: string
+  alt?: string
+  fill?: boolean
+  className?: string
+  sizes?: string
+  priority?: boolean
 }
 
-/** Image CMS (admin / API) avec URL résolue et sans optimisation Next pour les URLs distantes. */
+/** Image CMS — évite /_next/image pour les URLs Cloudinary et chemins API. */
 export function CmsImage({
   src,
   fallback = "/placeholder.svg",
-  alt,
-  onError,
-  ...props
+  alt = "",
+  fill,
+  className,
+  priority,
 }: CmsImageProps) {
   const resolved = resolveMediaUrl(src, fallback)
   const [currentSrc, setCurrentSrc] = useState(resolved)
-  const isRemote =
-    currentSrc.startsWith("http://") || currentSrc.startsWith("https://")
 
   useEffect(() => {
     setCurrentSrc(resolved)
   }, [resolved])
 
   return (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src={currentSrc}
-      alt={alt ?? ""}
-      unoptimized={isRemote}
-      onError={(e) => {
+      alt={alt}
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+      onError={() => {
         if (currentSrc !== fallback) setCurrentSrc(fallback)
-        onError?.(e)
       }}
-      {...props}
+      className={cn(fill && "absolute inset-0 h-full w-full", className)}
     />
   )
 }
