@@ -117,7 +117,7 @@ const translationsBase = {
     services: {
       title: "Services Complets de Fibre Optique",
       subtitle: "De l'étude à la maintenance : solutions intégrées adaptées à chaque territoire",
-      studies: "Études & Ingénierie",
+      studies: "Service",
       studiesDesc: "Relevés terrain en forêt et zones urbaines, études de faisabilité FTTH/FTTO, plans APS/APD/DOE, cartographie SIG certifiée.",
       deployment: "Déploiement Réseau",
       deploymentDesc: "Génie civil complet, tirage fibre en aérien/souterrain, soudure par fusion, installation PBO/BPE/PM à haut débit.",
@@ -285,7 +285,7 @@ const translationsBase = {
     services: {
       title: "Our Services",
       subtitle: "Complete solutions for all your fiber optic needs",
-      studies: "Studies & Engineering",
+      studies: "Services",
       studiesDesc: "Network design and sizing, feasibility studies, field surveys.",
       deployment: "Deployment",
       deploymentDesc: "Civil works, cable pulling, optical infrastructure installation.",
@@ -453,7 +453,7 @@ const translationsBase = {
     services: {
       title: "Nuestros Servicios",
       subtitle: "Soluciones completas para todas sus necesidades de fibra óptica",
-      studies: "Estudios e Ingeniería",
+      studies: "Servicios",
       studiesDesc: "Diseño y dimensionamiento de redes, estudios de viabilidad, relevamientos de campo.",
       deployment: "Despliegue",
       deploymentDesc: "Obras civiles, tendido de cables, instalación de infraestructura óptica.",
@@ -621,7 +621,7 @@ const translationsBase = {
     services: {
       title: "Nossos Serviços",
       subtitle: "Soluções completas para todas as suas necessidades de fibra óptica",
-      studies: "Estudos e Engenharia",
+      studies: "Serviços",
       studiesDesc: "Projeto e dimensionamento de redes, estudos de viabilidade, levantamentos de campo.",
       deployment: "Implantação",
       deploymentDesc: "Obras civis, passagem de cabos, instalação de infraestrutura óptica.",
@@ -789,7 +789,7 @@ const translationsBase = {
     services: {
       title: "Onze Diensten",
       subtitle: "Complete oplossingen voor al uw glasvezelbehoeften",
-      studies: "Studies & Engineering",
+      studies: "Diensten",
       studiesDesc: "Netwerkontwerp en dimensionering, haalbaarheidsstudies, veldonderzoeken.",
       deployment: "Uitrol",
       deploymentDesc: "Civiele werken, kabeltrekken, installatie van optische infrastructuur.",
@@ -957,7 +957,7 @@ const translationsBase = {
     services: {
       title: "Sèrvis Nou",
       subtitle: "Solisyon konplé pou tout bézwen fib optik ou",
-      studies: "Étid épi Enjènyri",
+      studies: "Sèvis",
       studiesDesc: "Konsépsyon rézo, étid fèzabilité, relevé tèren.",
       deployment: "Déplwayman",
       deploymentDesc: "Travay jéni sivil, tiraj kab, poz enfrastrikti optik.",
@@ -1125,7 +1125,7 @@ const translations: Record<Locale, Record<string, unknown>> = {
       ...(translationsBase.en.services as Record<string, unknown>),
       title: "خدماتنا",
       subtitle: "حلول متكاملة لجميع احتياجات الألياف الضوئية",
-      studies: "الدراسات والهندسة",
+      studies: "خدمات",
       deployment: "نشر الشبكات",
       connection: "ربط العملاء",
       maintenance: "الصيانة",
@@ -1195,7 +1195,7 @@ const translations: Record<Locale, Record<string, unknown>> = {
       ...(translationsBase.en.services as Record<string, unknown>),
       title: "我们的服务",
       subtitle: "覆盖光纤项目全生命周期的一体化解决方案",
-      studies: "勘察与工程设计",
+      studies: "服务",
       deployment: "网络部署实施",
       connection: "客户接入开通",
       maintenance: "运维与故障处理",

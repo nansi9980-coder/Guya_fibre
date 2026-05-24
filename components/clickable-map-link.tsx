@@ -63,6 +63,12 @@ export function ClickableMapLink({
         )}
       </div>
 
+      {/* Masque le bouton natif "ouvrir dans Google Maps" de l'iframe */}
+      <div
+        className="pointer-events-none absolute top-3 left-[7.5rem] z-[13] h-9 w-9 rounded-md bg-background/95"
+        aria-hidden
+      />
+
       {showOverlay && (
         <div className="pointer-events-none absolute top-4 left-4 z-[12] flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-3 py-1.5 shadow-md backdrop-blur-sm">
           <span className="relative flex h-3 w-3">

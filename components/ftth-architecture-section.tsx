@@ -108,7 +108,7 @@ const NODES: ArchNode[] = [
   },
   {
     id: "cm",
-    code: "CM",
+    code: "D3",
     label: "Colonne Montante",
     sublabel: "Distribution immeuble",
     icon: Building2,
